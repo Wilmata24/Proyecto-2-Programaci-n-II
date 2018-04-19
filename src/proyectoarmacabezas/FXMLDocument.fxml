@@ -3,12 +3,14 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="413.0" prefWidth="665.0" style="-fx-background-color: #CC9999;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1" fx:controller="proyectoarmacabezas.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="413.0" prefWidth="665.0" style="-fx-background-color: #FF9999;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoarmacabezas.FXMLDocumentController">
    <children>
-      <MenuBar prefHeight="27.0" prefWidth="665.0">
+      <MenuBar layoutY="1.0" prefHeight="27.0" prefWidth="665.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
@@ -27,7 +29,50 @@
           </Menu>
         </menus>
       </MenuBar>
-      <VBox layoutY="27.0" prefHeight="394.0" prefWidth="147.0" style="-fx-background-color: #99CCCC;" />
       <AnchorPane layoutX="147.0" layoutY="27.0" prefHeight="80.0" prefWidth="518.0" style="-fx-background-color: #CC6666;" />
+      <ScrollPane layoutY="27.0" prefHeight="385.0" prefWidth="147.0">
+         <content>
+            <AnchorPane prefHeight="396.0" prefWidth="152.0" style="-fx-background-color: #FF6666;">
+               <children>
+                  <ImageView fx:id="imageViewTwitter" fitHeight="66.0" fitWidth="75.0" layoutX="34.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../iconos/twitter.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="imageViewFacebook" fitHeight="66.0" fitWidth="75.0" layoutX="34.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../iconos/facebook.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="imageViewInstagram" fitHeight="66.0" fitWidth="77.0" layoutX="34.0" layoutY="185.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../iconos/instagram.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="66.0" fitWidth="77.0" layoutX="34.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageViewSkype" fitHeight="66.0" fitWidth="75.0" layoutX="34.0" layoutY="269.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../iconos/skype.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="imageViewSnapchat" fitHeight="66.0" fitWidth="75.0" layoutX="121.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../iconos/snapchat.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="imageViewSoundCloud" fitHeight="66.0" fitWidth="75.0" layoutX="121.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../iconos/soundcloud.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="imageViewTumblr" fitHeight="66.0" fitWidth="75.0" layoutX="121.0" layoutY="185.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="66.0" fitWidth="75.0" layoutX="117.0" layoutY="269.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageViewWhatsApp" fitHeight="66.0" fitWidth="77.0" layoutX="116.0" layoutY="269.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageViewTelegram" fitHeight="66.0" fitWidth="77.0" layoutX="29.0" layoutY="351.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageViewYouTube" fitHeight="66.0" fitWidth="77.0" layoutX="120.0" layoutY="343.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
    </children>
 </AnchorPane>
