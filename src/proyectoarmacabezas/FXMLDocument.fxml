@@ -8,9 +8,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="413.0" prefWidth="665.0" style="-fx-background-color: #FF9999;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoarmacabezas.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="465.0" prefWidth="689.0" style="-fx-background-color: #FF9999;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoarmacabezas.FXMLDocumentController">
    <children>
-      <MenuBar layoutY="1.0" prefHeight="27.0" prefWidth="665.0">
+      <MenuBar layoutY="1.0" prefHeight="27.0" prefWidth="692.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
@@ -29,10 +29,10 @@
           </Menu>
         </menus>
       </MenuBar>
-      <AnchorPane layoutX="147.0" layoutY="27.0" prefHeight="80.0" prefWidth="518.0" style="-fx-background-color: #CC6666;" />
-      <ScrollPane layoutY="27.0" prefHeight="385.0" prefWidth="147.0">
+      <AnchorPane layoutX="147.0" layoutY="27.0" prefHeight="80.0" prefWidth="545.0" style="-fx-background-color: #CC6666;" />
+      <ScrollPane layoutX="-1.0" layoutY="27.0" prefHeight="438.0" prefWidth="153.0">
          <content>
-            <AnchorPane prefHeight="396.0" prefWidth="152.0" style="-fx-background-color: #FF6666;">
+            <AnchorPane prefHeight="440.0" prefWidth="192.0" style="-fx-background-color: #FF6666;">
                <children>
                   <ImageView fx:id="imageViewTwitter" fitHeight="66.0" fitWidth="75.0" layoutX="34.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -74,5 +74,6 @@
             </AnchorPane>
          </content>
       </ScrollPane>
+      <AnchorPane fx:id="anchorPaneMapa" layoutX="232.0" layoutY="128.0" prefHeight="242.0" prefWidth="328.0" />
    </children>
 </AnchorPane>
