@@ -11,27 +11,39 @@ import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import javafx.scene.image.Image;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.namespace.QName;
 
 /**
- *
- * @author Nicole
+ *@author Wilmer Mata
+ * @author Nicole Fonseca
  */
 public class Archivos {
-    
-    public Imagen leerArchivo(String nombreArchivo) {
+    /*
+    * Leer de archivo formato JSON
+    */
+    public Icono leerArchivo(String nombreArchivo) {
         
         try {
 			BufferedReader lector = new BufferedReader(new FileReader(nombreArchivo));
 			JsonReader lectorJson = new JsonReader(lector);
-			Imagen tmpImagen;
+			Icono tmpIcono;
 			Gson gson = new Gson();
-			tmpImagen = gson.fromJson(lectorJson, null);
+			tmpIcono = gson.fromJson(lectorJson, null);
 			// cerrar descriptores de archivos
 			lectorJson.close();
 			lector.close();
 			// todo salió bien, devuelva la ciudad ya cargada
-			return tmpImagen;
+			return tmpIcono;
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -42,8 +54,10 @@ public class Archivos {
 			return null;
 		}
     }
-    
-    public Boolean guardarImagen(String rutaArchivo, Image img) {
+    /*
+    * Escribir en archivo formato JSON
+    */
+    public Boolean guardarEnArchivo(String rutaArchivo, Icono icono) {
 		try {
 
 			BufferedWriter escritor = new BufferedWriter(new FileWriter(rutaArchivo));
@@ -52,7 +66,7 @@ public class Archivos {
 			//Generar estructura Json
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			//guardar a archivo
-			gson.toJson(img, img.getClass(), escritorJson);
+			gson.toJson(icono, icono.getClass(), escritorJson);
 
 			// cerrar descriptores de archivo
 			escritorJson.close();
@@ -73,5 +87,39 @@ public class Archivos {
 
 	}
 
+    /*
+    * Escribir en archivo formato XML
+    */
+   
+    public Boolean guardarIconos(final String rutaArchivo, final Icono icono) {
+	try {
+
+            Path archivo = Paths.get(rutaArchivo);
+            BufferedWriter escritorXml = new BufferedWriter(Files.newBufferedWriter(archivo, StandardCharsets.UTF_8));
+            
+            JAXBContext jaxContext = JAXBContext.newInstance(Icono.class);
+            Marshaller marshaller = jaxContext.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+            QName etiquetaRaiz = new QName(icono.getClass().toString());
+            JAXBElement<Icono> iconoXml = new JAXBElement<Icono>(etiquetaRaiz, Icono.class, icono);
+
+            marshaller.marshal(iconoXml, escritorXml);
+
+            marshaller.marshal(iconoXml, System.out);
+            //cerrar descriptor de archivos
+            escritorXml.close();
+
+        } catch (JAXBException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return false;
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+	}
     
 }

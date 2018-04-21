@@ -8,8 +8,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
- * @author Wilmata
+ * @author Wilmer Mata
+ * @author Nicole Fonseca
  */
 public class ProyectoArmacabezas extends Application {
     

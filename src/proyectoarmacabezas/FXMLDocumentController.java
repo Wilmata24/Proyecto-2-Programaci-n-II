@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package proyectoarmacabezas;
 
 import java.net.URL;
@@ -16,7 +12,8 @@ import javafx.scene.layout.GridPane;
 
 /**
  *
- * @author Wilmata
+ * @author Wilmer Mata
+ * @author Nicole Fonseca
  */
 public class FXMLDocumentController implements Initializable {
     
@@ -73,7 +70,6 @@ public class FXMLDocumentController implements Initializable {
         //Iconos definidos para que el usuario llene el mapa
         Image imageTwitter = new Image("/iconos/twitter.png");
         imageViewTwitter.setImage(imageTwitter);
-        Imagen imagenTwitter = new Imagen(imageTwitter, "Twitter", 0);
         
         Image imageFacebook = new Image("/iconos/facebook.png");
         imageViewFacebook.setImage(imageFacebook);
@@ -102,9 +98,29 @@ public class FXMLDocumentController implements Initializable {
         Image imageYouTube = new Image("/iconos/youtube.png");
         imageViewYouTube.setImage(imageYouTube);
     
-        //Prueba para escribir en archivo
-//        Archivos archivo = new Archivos();
-//        archivo.guardarImagen("Imagen", imageTwitter);
+        //Prueba para escribir en archivo Xml
+        Archivos archivo = new Archivos();
+        Icono iconoTwitter = new Icono("Twitter", 10, 10, 64);
+        Icono iconoFacebook = new Icono("Facebook", 10, 10 ,64);
+        Icono iconoInstagram = new Icono("Instagram", 10, 10 ,64);
+        Icono iconoSkype = new Icono("Skype", 10, 10 ,64);
+        Icono iconoSnapchat = new Icono("Snapchat", 10, 10 ,64);
+        Icono iconoSoundCloud = new Icono("SoundCloud", 10, 10 ,64);
+        Icono iconoTumblr = new Icono("Tumblr", 10, 10 ,64);
+        Icono iconoWhatsApp = new Icono("WhatsApp", 10, 10 ,64);
+        Icono iconoTelegram = new Icono("Telegram", 10, 10 ,64);
+        Icono iconoYouTube = new Icono("YouTube", 10, 10 ,64);
+        
+        archivo.guardarIconos("ListadoIconos", iconoTwitter);
+        archivo.guardarIconos("ListadoIconos", iconoFacebook);
+        archivo.guardarIconos("ListadoIconos", iconoInstagram);
+        archivo.guardarIconos("ListadoIconos", iconoSkype);
+        archivo.guardarIconos("ListadoIconos", iconoSnapchat);
+        archivo.guardarIconos("ListadoIconos", iconoSoundCloud);
+        archivo.guardarIconos("ListadoIconos", iconoTumblr);
+        archivo.guardarIconos("ListadoIconos", iconoWhatsApp);
+        archivo.guardarIconos("ListadoIconos", iconoTelegram);
+        archivo.guardarIconos("ListadoIconos", iconoYouTube);
 
 
     }    
