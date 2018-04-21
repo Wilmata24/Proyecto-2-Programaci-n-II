@@ -5,6 +5,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -29,6 +32,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML private ImageView imageViewYouTube;
     @FXML private GridPane gridPaneMapa;
     @FXML private AnchorPane anchorPaneMapa;
+    @FXML private MenuBar menuBar;
    
     /*
     * Método para mostrar el mapa mediante una matriz, el tamaño es definido por el usuario con
@@ -60,11 +64,16 @@ public class FXMLDocumentController implements Initializable {
             n++;
         } 
         //Agregar mapa al AnchorPane
+        gridPaneMapa.setAlignment(Pos.CENTER);
         anchorPaneMapa.getChildren().add(gridPaneMapa);
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //Relleno y color de la barra de menú
+        menuBar.setPadding(new Insets(10, 200,10,300));
+        menuBar.setStyle("-fx-background-color: #CC9999");
+        
         //Llamada al método para mostrar el mapa
         mostrarMapa(5, 5);
         //Iconos definidos para que el usuario llene el mapa
