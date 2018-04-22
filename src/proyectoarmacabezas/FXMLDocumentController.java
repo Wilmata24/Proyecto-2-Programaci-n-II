@@ -12,7 +12,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import Archivos.AdministradorArchivosXml;
+import javafx.event.ActionEvent;
 import javafx.scene.Cursor;
+import javafx.scene.control.TextField;
+import logica.Logica;
 
 /**
  *
@@ -20,7 +23,7 @@ import javafx.scene.Cursor;
  * @author Nicole Fonseca
  */
 public class FXMLDocumentController implements Initializable {
-
+    Logica logica = new Logica();
     @FXML private ImageView imageViewTwitter;
     @FXML private ImageView imageViewFacebook;
     @FXML private ImageView imageViewInstagram;
@@ -34,6 +37,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML private GridPane gridPaneMapa;
     @FXML private AnchorPane anchorPaneMapa;
     @FXML private MenuBar menuBar;
+    @FXML private TextField textFieldLargo;
+    @FXML private TextField textFieldAncho;
    
 
     /*
@@ -43,32 +48,24 @@ public class FXMLDocumentController implements Initializable {
     * llenar el GridPane con las imágenes
      */
     
-    public void mostrarMapa(int primerParametro, int segundoParametro) {
 
-        gridPaneMapa = new GridPane();
-        //Matriz de imágenes con tamaño definido por el usuario
-        Image muestraMapa[][] = new Image[primerParametro][segundoParametro];
-        ImageView imageViewMuestraMapa[][] = new ImageView[primerParametro][segundoParametro];
-
-        int m = 0;
-        int n = 0;
-        for (int i = 0; i < muestraMapa.length; i++) {
-            m = 0;
-            for (int j = 0; j < muestraMapa[0].length; j++) {
-                muestraMapa[i][j] = new Image("/iconos/cuadrado.jpg");
-                imageViewMuestraMapa[i][j] = new ImageView();
-                imageViewMuestraMapa[i][j].setImage(muestraMapa[i][j]);
-                
-                GridPane.setConstraints(imageViewMuestraMapa[i][j], m, n);
-                m++;
-                gridPaneMapa.getChildren().add(imageViewMuestraMapa[i][j]);
-            }
-            n++;
-        }
         //Agregar mapa al AnchorPane
-        gridPaneMapa.setAlignment(Pos.CENTER);
-        anchorPaneMapa.getChildren().add(gridPaneMapa);
+//        gridPaneMapa.setAlignment(Pos.CENTER);
+        
+      
+    @FXML
+    
+    public void buttonAceptarAccion(ActionEvent event){
+        if(Integer.parseInt(textFieldLargo.getText()) <= 0 || Integer.parseInt(textFieldAncho.getText()) <=0 ){
+            System.out.println("Valor incorrecto");
+        } else if(textFieldLargo.getText().equals(null) || textFieldAncho.getText().equals(null)) {
+            System.out.println("Ingrese los dos valores.");
+        } else {
+       gridPaneMapa = logica.mostrarMapa(Integer.parseInt(textFieldLargo.getText()),Integer.parseInt(textFieldAncho.getText()));
+       anchorPaneMapa.getChildren().add(gridPaneMapa);
+        }
     }
+  
     
 
    
@@ -80,7 +77,6 @@ public class FXMLDocumentController implements Initializable {
         menuBar.setStyle("-fx-background-color: #CC9999");
 
         //Llamada al método para mostrar el mapa
-        mostrarMapa(5, 5);
         //Iconos definidos para que el usuario llene el mapa
         Image imageTwitter = new Image("/iconos/twitter.png");
         imageViewTwitter.setImage(imageTwitter);

@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="433.0" prefWidth="607.0" style="-fx-background-color: #FF9999;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoarmacabezas.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="433.0" prefWidth="607.0" style="-fx-background-color: #FF9999;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoarmacabezas.FXMLDocumentController">
    <children>
       <MenuBar fx:id="menuBar" layoutY="1.0" prefHeight="43.0" prefWidth="697.0">
         <menus>
@@ -29,7 +32,15 @@
           </Menu>
         </menus>
       </MenuBar>
-      <AnchorPane layoutX="152.0" layoutY="44.0" prefHeight="80.0" prefWidth="545.0" style="-fx-background-color: #CC6666;" />
+      <AnchorPane layoutX="153.0" layoutY="43.0" prefHeight="80.0" prefWidth="545.0" style="-fx-background-color: #CC6666;">
+         <children>
+            <TextField fx:id="textFieldLargo" layoutX="239.0" layoutY="14.0" prefHeight="25.0" prefWidth="68.0" />
+            <TextField fx:id="textFieldAncho" layoutX="239.0" layoutY="41.0" prefHeight="25.0" prefWidth="68.0" />
+            <Label layoutX="182.0" layoutY="18.0" prefHeight="17.0" prefWidth="44.0" text="Largo:" />
+            <Label layoutX="182.0" layoutY="45.0" text="Ancho:" />
+            <Button layoutX="342.0" layoutY="28.0" mnemonicParsing="false" onAction="#buttonAceptarAccion" text="Aceptar" />
+         </children>
+      </AnchorPane>
       <ScrollPane layoutX="-6.0" layoutY="43.0" prefHeight="439.0" prefWidth="159.0">
          <content>
             <AnchorPane prefHeight="456.0" prefWidth="162.0" style="-fx-background-color: #FF6666;">
