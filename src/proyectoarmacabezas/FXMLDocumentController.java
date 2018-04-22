@@ -23,6 +23,7 @@ import logica.Logica;
  * @author Nicole Fonseca
  */
 public class FXMLDocumentController implements Initializable {
+    
     Logica logica = new Logica();
     @FXML private ImageView imageViewTwitter;
     @FXML private ImageView imageViewFacebook;
@@ -40,43 +41,29 @@ public class FXMLDocumentController implements Initializable {
     @FXML private TextField textFieldLargo;
     @FXML private TextField textFieldAncho;
    
-
-    /*
-    * Método para mostrar el mapa mediante una matriz, el tamaño es definido por el usuario con
-    * los parámetros primerParametro y segundoParametro, el primer for recorre la matriz de Image
-    * y el segundo for la matriz de ImageView, mientras que las variables m y n van aumentando para
-    * llenar el GridPane con las imágenes
-     */
-    
-
-        //Agregar mapa al AnchorPane
-//        gridPaneMapa.setAlignment(Pos.CENTER);
-        
-      
     @FXML
-    
-    public void buttonAceptarAccion(ActionEvent event){
-        if(Integer.parseInt(textFieldLargo.getText()) <= 0 || Integer.parseInt(textFieldAncho.getText()) <=0 ){
+    public void buttonAceptarAccion(ActionEvent event) {
+        
+        if (Integer.parseInt(textFieldLargo.getText()) <= 0 || Integer.parseInt(textFieldAncho.getText()) <= 0) {
             System.out.println("Valor incorrecto");
-        } else if(textFieldLargo.getText().equals(null) || textFieldAncho.getText().equals(null)) {
+        } else if (textFieldLargo.getText().equals(null) || textFieldAncho.getText().equals(null)) {
             System.out.println("Ingrese los dos valores.");
         } else {
-       gridPaneMapa = logica.mostrarMapa(Integer.parseInt(textFieldLargo.getText()),Integer.parseInt(textFieldAncho.getText()));
-       anchorPaneMapa.getChildren().add(gridPaneMapa);
+            gridPaneMapa = logica.mostrarMapa(Integer.parseInt(textFieldLargo.getText()), Integer.parseInt(textFieldAncho.getText()));
+            //Agregar mapa al AnchorPane
+            anchorPaneMapa.getChildren().add(gridPaneMapa);
         }
     }
   
-    
-
-   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //Mover íconos
+        logica.moverIconos(imageViewSkype);
         
         //Relleno y color de la barra de menú
         menuBar.setPadding(new Insets(10, 200, 10, 300));
         menuBar.setStyle("-fx-background-color: #CC9999");
 
-        //Llamada al método para mostrar el mapa
         //Iconos definidos para que el usuario llene el mapa
         Image imageTwitter = new Image("/iconos/twitter.png");
         imageViewTwitter.setImage(imageTwitter);
