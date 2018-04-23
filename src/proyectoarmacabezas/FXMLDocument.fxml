@@ -11,21 +11,19 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="433.0" prefWidth="607.0" style="-fx-background-color: #FF9999;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoarmacabezas.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="433.0" prefWidth="607.0" style="-fx-background-color: #FF9999;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoarmacabezas.FXMLDocumentController">
    <children>
       <MenuBar fx:id="menuBar" layoutY="1.0" prefHeight="43.0" prefWidth="697.0">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="Archivo">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem fx:id="menuItemGuardar" mnemonicParsing="false" onAction="#guardar" text="Guardar" />
+                  <MenuItem fx:id="menuItemAbrir" mnemonicParsing="false" onAction="#abrirDocumento" text="Abrir documento" />
+                  <MenuItem fx:id="menuItemExportar" mnemonicParsing="false" onAction="#exportar" text="Exportar" />
+                  <MenuItem fx:id="menuItemSalir" mnemonicParsing="false" onAction="#salir" text="Salir" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" text="Ayuda">
             <items>
               <MenuItem mnemonicParsing="false" text="About" />
             </items>
@@ -79,7 +77,7 @@
                   <ImageView fx:id="imageViewTumblr" fitHeight="66.0" fitWidth="75.0" layoutX="121.0" layoutY="185.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="66.0" fitWidth="75.0" layoutX="117.0" layoutY="269.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fx:id="imageViewWhatsApp" fitHeight="66.0" fitWidth="77.0" layoutX="116.0" layoutY="269.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="imageViewTelegram" fitHeight="66.0" fitWidth="77.0" layoutX="29.0" layoutY="351.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageViewTelegram" fitHeight="66.0" fitWidth="77.0" layoutX="29.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fx:id="imageViewYouTube" fitHeight="66.0" fitWidth="77.0" layoutX="120.0" layoutY="343.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </AnchorPane>

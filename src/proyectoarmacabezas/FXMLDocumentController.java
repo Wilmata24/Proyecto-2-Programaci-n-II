@@ -5,16 +5,21 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import Archivos.AdministradorArchivosXml;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Cursor;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import logica.Logica;
 
 /**
@@ -35,11 +40,14 @@ public class FXMLDocumentController implements Initializable {
     @FXML private ImageView imageViewWhatsApp;
     @FXML private ImageView imageViewTelegram;
     @FXML private ImageView imageViewYouTube;
-    @FXML private GridPane gridPaneMapa;
     @FXML private AnchorPane anchorPaneMapa;
-    @FXML private MenuBar menuBar;
     @FXML private TextField textFieldLargo;
     @FXML private TextField textFieldAncho;
+    @FXML private MenuItem menuItemGuardar;
+    @FXML private MenuItem menuItemAbrir;
+    @FXML private MenuItem menuItemExportar;
+    @FXML private MenuBar menuBar;
+    private GridPane gridPaneMapa;
    
     @FXML
     public void buttonAceptarAccion(ActionEvent event) {
@@ -52,13 +60,65 @@ public class FXMLDocumentController implements Initializable {
             gridPaneMapa = logica.mostrarMapa(Integer.parseInt(textFieldLargo.getText()), Integer.parseInt(textFieldAncho.getText()));
             //Agregar mapa al AnchorPane
             anchorPaneMapa.getChildren().add(gridPaneMapa);
+            
         }
+    }
+    
+    private Double lastX = null;
+    private Double lastY = null;
+
+    public void arrastrar()
+    {
+        if (this.imageViewFacebook != null)
+        {
+            this.imageViewFacebook.setOnDragOver(new EventHandler<DragEvent>()
+            {
+                @Override
+                public void handle(DragEvent dragEvent)
+                {
+                    HandleMouseMovement(dragEvent.getSceneX(), dragEvent.getSceneY());
+                }
+            });
+
+            this.imageViewFacebook.setOnDragDetected(new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent event) {
+                    Dragboard db = imageViewFacebook.startDragAndDrop(TransferMode.MOVE);
+                    ClipboardContent content = new ClipboardContent();
+                    content.putString("Does not matter");
+                    db.setContent(content);
+                    event.consume();
+
+                    lastX = event.getSceneX();
+                    lastY = event.getSceneY();
+                }
+            });
+        }
+    }
+
+    private synchronized void HandleMouseMovement(double sceneX, double sceneY)
+    {
+        double deltaX = sceneX - lastX;
+        double deltaY = sceneY - lastY;
+
+        lastX = sceneX;
+        lastY = sceneY;
+
+        double currentXAnchor =AnchorPane.getLeftAnchor(this.imageViewFacebook);
+        double currentYAnchor =AnchorPane.getTopAnchor(this.imageViewFacebook);
+
+        AnchorPane.setLeftAnchor( this.imageViewFacebook,  currentXAnchor + deltaX*1.5);
+        AnchorPane.setTopAnchor(this.imageViewFacebook, currentYAnchor + deltaY*1.5);
     }
   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         //Mover íconos
-        logica.moverIconos(imageViewSkype);
+        arrastrar();
+        //logica.moverIconos(imageViewSkype);
+        
+        //Guardar descripción de los íconos en archivo Xml
+        logica.guardarInformacionIconos();
         
         //Relleno y color de la barra de menú
         menuBar.setPadding(new Insets(10, 200, 10, 300));
@@ -105,30 +165,26 @@ public class FXMLDocumentController implements Initializable {
         imageViewYouTube.setImage(imageYouTube);
         imageViewYouTube.setCursor(Cursor.HAND);
 
-        //Guardar descripción de los íconos en archivo Xml
-        AdministradorArchivosXml archivoXml = new AdministradorArchivosXml();
-        Icono iconoTwitter = new Icono("Twitter", 64);
-        Icono iconoFacebook = new Icono("Facebook", 64);
-        Icono iconoInstagram = new Icono("Instagram", 64);
-        Icono iconoSkype = new Icono("Skype", 64);
-        Icono iconoSnapchat = new Icono("Snapchat", 64);
-        Icono iconoSoundCloud = new Icono("SoundCloud", 64);
-        Icono iconoTumblr = new Icono("Tumblr", 64);
-        Icono iconoWhatsApp = new Icono("WhatsApp", 64);
-        Icono iconoTelegram = new Icono("Telegram", 64);
-        Icono iconoYouTube = new Icono("YouTube", 64);
+    }
+    
+    @FXML
+    private void guardar(ActionEvent event) {
+        logica.fileChooserGuardar(menuItemGuardar);
+    }
+    
+    @FXML
+    private void salir(ActionEvent event) {
+        System.exit(0);
+    }
 
-        archivoXml.guardarIconos("ListadoIconos", iconoTwitter);
-        archivoXml.guardarIconos("ListadoIconos", iconoFacebook);
-        archivoXml.guardarIconos("ListadoIconos", iconoInstagram);
-        archivoXml.guardarIconos("ListadoIconos", iconoSkype);
-        archivoXml.guardarIconos("ListadoIconos", iconoSnapchat);
-        archivoXml.guardarIconos("ListadoIconos", iconoSoundCloud);
-        archivoXml.guardarIconos("ListadoIconos", iconoTumblr);
-        archivoXml.guardarIconos("ListadoIconos", iconoWhatsApp);
-        archivoXml.guardarIconos("ListadoIconos", iconoTelegram);
-        archivoXml.guardarIconos("ListadoIconos", iconoYouTube);
+    @FXML
+    private void abrirDocumento(ActionEvent event) {
+        logica.fileChooserAbrirDocumento(menuItemAbrir);
+    }
 
+    @FXML
+    private void exportar(ActionEvent event) {
+        logica.fileChooserExportar(menuItemExportar);
     }
     
     
