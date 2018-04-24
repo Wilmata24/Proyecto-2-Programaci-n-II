@@ -18,8 +18,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import logica.Logica;
 
 /**
@@ -48,7 +51,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML private MenuItem menuItemExportar;
     @FXML private MenuBar menuBar;
     private GridPane gridPaneMapa;
-   
+    @FXML private MenuItem menuItemSalir;
+ 
     @FXML
     public void buttonAceptarAccion(ActionEvent event) {
         
@@ -64,57 +68,48 @@ public class FXMLDocumentController implements Initializable {
         }
     }
     
-    private Double lastX = null;
-    private Double lastY = null;
+//    private Double lastX = null;
+//    private Double lastY = null;
+//
+//    public void arrastrar() {
+//        if (this.imageViewFacebook != null) {
+//            this.imageViewFacebook.setOnDragOver((DragEvent dragEvent) -> {
+//                HandleMouseMovement(dragEvent.getSceneX(), dragEvent.getSceneY());
+//            });
+//
+//            this.imageViewFacebook.setOnDragDetected((MouseEvent event) -> {
+//                Dragboard db = this.imageViewFacebook.startDragAndDrop(TransferMode.MOVE);
+//                ClipboardContent content = new ClipboardContent();
+//                content.putString("Does not matter");
+//                db.setContent(content);
+//                event.consume();
+//                
+//                lastX = event.getSceneX();
+//                lastY = event.getSceneY();
+//            });
+//        }
+//    }
 
-    public void arrastrar()
-    {
-        if (this.imageViewFacebook != null)
-        {
-            this.imageViewFacebook.setOnDragOver(new EventHandler<DragEvent>()
-            {
-                @Override
-                public void handle(DragEvent dragEvent)
-                {
-                    HandleMouseMovement(dragEvent.getSceneX(), dragEvent.getSceneY());
-                }
-            });
-
-            this.imageViewFacebook.setOnDragDetected(new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent event) {
-                    Dragboard db = imageViewFacebook.startDragAndDrop(TransferMode.MOVE);
-                    ClipboardContent content = new ClipboardContent();
-                    content.putString("Does not matter");
-                    db.setContent(content);
-                    event.consume();
-
-                    lastX = event.getSceneX();
-                    lastY = event.getSceneY();
-                }
-            });
-        }
-    }
-
-    private synchronized void HandleMouseMovement(double sceneX, double sceneY)
-    {
-        double deltaX = sceneX - lastX;
-        double deltaY = sceneY - lastY;
-
-        lastX = sceneX;
-        lastY = sceneY;
-
-        double currentXAnchor =AnchorPane.getLeftAnchor(this.imageViewFacebook);
-        double currentYAnchor =AnchorPane.getTopAnchor(this.imageViewFacebook);
-
-        AnchorPane.setLeftAnchor( this.imageViewFacebook,  currentXAnchor + deltaX*1.5);
-        AnchorPane.setTopAnchor(this.imageViewFacebook, currentYAnchor + deltaY*1.5);
-    }
+//    private synchronized void HandleMouseMovement(double sceneX, double sceneY)
+//    {
+//        double deltaX = sceneX - lastX;
+//        double deltaY = sceneY - lastY;
+//
+//        lastX = sceneX;
+//        lastY = sceneY;
+//
+//        double currentXAnchor =AnchorPane.getLeftAnchor(this.imageViewFacebook);
+//        double currentYAnchor =AnchorPane.getTopAnchor(this.imageViewFacebook);
+//
+//        AnchorPane.setLeftAnchor(this.imageViewFacebook,  currentXAnchor + deltaX*1.5);
+//        AnchorPane.setTopAnchor(this.imageViewFacebook, currentYAnchor + deltaY*1.5);
+//    }
   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
         //Mover íconos
-        arrastrar();
+        //arrastrar();
         //logica.moverIconos(imageViewSkype);
         
         //Guardar descripción de los íconos en archivo Xml
@@ -186,7 +181,14 @@ public class FXMLDocumentController implements Initializable {
     private void exportar(ActionEvent event) {
         logica.fileChooserExportar(menuItemExportar);
     }
-    
-    
+
+    @FXML
+    private void mouseMoved(MouseEvent event) {
+
+        int x = (int) event.getX();
+        int y = (int) event.getY();
+        imageViewTwitter.setX(x);
+        imageViewTwitter.setY(y);
+    }
 
 }

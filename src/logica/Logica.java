@@ -10,7 +10,11 @@ import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import proyectoarmacabezas.FXMLDocumentController;
@@ -74,6 +78,7 @@ public class Logica {
                 orgSceneY = event.getSceneY();
                 orgTranslateX = ((ImageView) (event.getSource())).getTranslateX();
                 orgTranslateY = ((ImageView) (event.getSource())).getTranslateY();
+
             }
         };
 
@@ -86,9 +91,10 @@ public class Logica {
                 double offsetY = event.getSceneY() - orgSceneY;
                 double newTranslateX = orgTranslateX + offsetX;
                 double newTranslateY = orgTranslateY + offsetY;
-
+                 
                 ((ImageView) (event.getSource())).setTranslateX(newTranslateX);
                 ((ImageView) (event.getSource())).setTranslateY(newTranslateY);
+                
             }
         };
 

@@ -43,7 +43,7 @@
          <content>
             <AnchorPane prefHeight="456.0" prefWidth="162.0" style="-fx-background-color: #FF6666;">
                <children>
-                  <ImageView fx:id="imageViewTwitter" fitHeight="66.0" fitWidth="75.0" layoutX="34.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imageViewTwitter" fitHeight="66.0" fitWidth="75.0" layoutX="34.0" layoutY="14.0" onMouseDragged="#mouseMoved" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../iconos/twitter.png" />
                      </image>
@@ -58,7 +58,6 @@
                         <Image url="@../iconos/instagram.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="66.0" fitWidth="77.0" layoutX="34.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fx:id="imageViewSkype" fitHeight="66.0" fitWidth="75.0" layoutX="34.0" layoutY="269.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../iconos/skype.png" />
@@ -75,10 +74,9 @@
                      </image>
                   </ImageView>
                   <ImageView fx:id="imageViewTumblr" fitHeight="66.0" fitWidth="75.0" layoutX="121.0" layoutY="185.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="66.0" fitWidth="75.0" layoutX="117.0" layoutY="269.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="imageViewWhatsApp" fitHeight="66.0" fitWidth="77.0" layoutX="116.0" layoutY="269.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fx:id="imageViewTelegram" fitHeight="66.0" fitWidth="77.0" layoutX="29.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fx:id="imageViewYouTube" fitHeight="66.0" fitWidth="77.0" layoutX="120.0" layoutY="343.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageViewWhatsApp" fitHeight="66.0" fitWidth="77.0" layoutX="116.0" layoutY="266.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </AnchorPane>
          </content>
