@@ -1,16 +1,18 @@
-package logica;
+package lógica;
 
-import Archivos.AdministradorArchivosXml;
+import archivos.AdministradorArchivosXml;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -18,7 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import proyectoarmacabezas.FXMLDocumentController;
-import proyectoarmacabezas.Icono;
+import dominio.Icono;
 
 /**
  *
@@ -26,7 +28,7 @@ import proyectoarmacabezas.Icono;
  * @author Nicole Fonseca
  */
 
-public class Logica {
+public class Lógica {
 
     private GridPane gridPaneMapa;
 
@@ -37,12 +39,12 @@ public class Logica {
     * llenar el GridPane con las imágenes
      */
     
-    public GridPane mostrarMapa(int primerParametro, int segundoParametro) {
+    public GridPane mostrarMapa(int filas, int columnas) {
 
         gridPaneMapa = new GridPane();
         //Matriz de imágenes con tamaño definido por el usuario
-        Image muestraMapa[][] = new Image[primerParametro][segundoParametro];
-        ImageView imageViewMuestraMapa[][] = new ImageView[primerParametro][segundoParametro];
+        Image muestraMapa[][] = new Image[filas][columnas];
+        ImageView imageViewMuestraMapa[][] = new ImageView[filas][columnas];
 
         int m = 0;
         int n = 0;
@@ -117,12 +119,12 @@ public class Logica {
         
     }
     
-    private void guardarDocumento(String content, File file) {
+    private void guardarDocumento(String contenido, File archivo) {
         try {
             FileWriter fileWriter = null;
 
-            fileWriter = new FileWriter(file);
-            fileWriter.write(content);
+            fileWriter = new FileWriter(archivo);
+            fileWriter.write(contenido);
             fileWriter.close();
         } catch (IOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -171,27 +173,72 @@ public class Logica {
     //Guardar descripción de los íconos en archivo Xml
     public void guardarInformacionIconos() {
         
-        Icono iconoTwitter = new Icono("Twitter", 64);
-        Icono iconoFacebook = new Icono("Facebook", 64);
-        Icono iconoInstagram = new Icono("Instagram", 64);
-        Icono iconoSkype = new Icono("Skype", 64);
-        Icono iconoSnapchat = new Icono("Snapchat", 64);
-        Icono iconoSoundCloud = new Icono("SoundCloud", 64);
-        Icono iconoTumblr = new Icono("Tumblr", 64);
-        Icono iconoWhatsApp = new Icono("WhatsApp", 64);
-        Icono iconoTelegram = new Icono("Telegram", 64);
-        Icono iconoYouTube = new Icono("YouTube", 64);
+//        Icono iconoTwitter = new Icono("Twitter", 64, "");
+//        Icono iconoFacebook = new Icono("Facebook", 64);
+//        Icono iconoInstagram = new Icono("Instagram", 64);
+//        Icono iconoSkype = new Icono("Skype", 64);
+//        Icono iconoSnapchat = new Icono("Snapchat", 64);
+//        Icono iconoSoundCloud = new Icono("SoundCloud", 64);
+//        Icono iconoTumblr = new Icono("Tumblr", 64);
+//        Icono iconoWhatsApp = new Icono("WhatsApp", 64);
+//        Icono iconoTelegram = new Icono("Telegram", 64);
+//        Icono iconoYouTube = new Icono("YouTube", 64);
         
-        AdministradorArchivosXml archivoXml = new AdministradorArchivosXml();
-        archivoXml.guardarIconos("ListadoIconos", iconoTwitter);
-        archivoXml.guardarIconos("ListadoIconos", iconoFacebook);
-        archivoXml.guardarIconos("ListadoIconos", iconoInstagram);
-        archivoXml.guardarIconos("ListadoIconos", iconoSkype);
-        archivoXml.guardarIconos("ListadoIconos", iconoSnapchat);
-        archivoXml.guardarIconos("ListadoIconos", iconoSoundCloud);
-        archivoXml.guardarIconos("ListadoIconos", iconoTumblr);
-        archivoXml.guardarIconos("ListadoIconos", iconoWhatsApp);
-        archivoXml.guardarIconos("ListadoIconos", iconoTelegram);
-        archivoXml.guardarIconos("ListadoIconos", iconoYouTube);
+//        AdministradorArchivosXml archivoXml = new AdministradorArchivosXml();
+//        archivoXml.guardarIconos("ListadoIconos", iconoTwitter);
+//        archivoXml.guardarIconos("ListadoIconos", iconoFacebook);
+//        archivoXml.guardarIconos("ListadoIconos", iconoInstagram);
+//        archivoXml.guardarIconos("ListadoIconos", iconoSkype);
+//        archivoXml.guardarIconos("ListadoIconos", iconoSnapchat);
+//        archivoXml.guardarIconos("ListadoIconos", iconoSoundCloud);
+//        archivoXml.guardarIconos("ListadoIconos", iconoTumblr);
+//        archivoXml.guardarIconos("ListadoIconos", iconoWhatsApp);
+//        archivoXml.guardarIconos("ListadoIconos", iconoTelegram);
+//        archivoXml.guardarIconos("ListadoIconos", iconoYouTube);
+    }
+    ImageView auxImageView;
+    public void setupGestureTarget(final GridPane targetBox) {
+
+        targetBox.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+
+                Dragboard db = event.getDragboard();
+
+                if (db.hasImage()) {
+                    event.acceptTransferModes(TransferMode.MOVE);
+                }
+
+                event.consume();
+            }
+        });
+
+        targetBox.setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+
+                Dragboard db = event.getDragboard();
+
+                if (db.hasImage()) {
+
+                    auxImageView.setImage(db.getImage());
+
+                    Point2D localPoint = targetBox.sceneToLocal(new Point2D(event.getSceneX(), event.getSceneY()));
+
+//                    System.out.println("event.getSceneX : "+event.getSceneX());
+//                    System.out.println("localPoint.getX : "+localPoint.getX());
+//                    System.out.println("********");
+                    targetBox.getChildren().remove(auxImageView);
+
+                    auxImageView.setX((int) (localPoint.getX() - auxImageView.getBoundsInLocal().getWidth() / 2));
+                    auxImageView.setY((int) (localPoint.getY() - auxImageView.getBoundsInLocal().getHeight() / 2));
+
+                    targetBox.getChildren().add(auxImageView);
+
+                    event.consume();
+                }
+            }
+        });
+
     }
 }
