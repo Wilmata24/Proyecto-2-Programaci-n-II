@@ -7,10 +7,11 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="433.0" prefWidth="607.0" style="-fx-background-color: #FF9999;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoarmacabezas.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="433.0" prefWidth="607.0" style="-fx-background-color: #FF9999;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoarmacabezas.FXMLDocumentController">
    <children>
       <MenuBar fx:id="menuBar" layoutY="1.0" prefHeight="43.0" prefWidth="697.0">
         <menus>
@@ -49,7 +50,10 @@
       </ScrollPane>
       <ScrollPane layoutX="153.0" layoutY="124.0" prefHeight="360.0" prefWidth="545.0">
          <content>
-            <AnchorPane fx:id="anchorPaneMapa" prefHeight="362.0" prefWidth="543.0" style="-fx-background-color: #CC9999;" />
+            <AnchorPane fx:id="anchorPaneMapa" prefHeight="362.0" prefWidth="543.0" style="-fx-background-color: #CC9999;">
+               <children>
+                  <ImageView fx:id="pruebaImageView" fitHeight="150.0" fitWidth="200.0" layoutX="329.0" pickOnBounds="true" preserveRatio="true" />
+               </children></AnchorPane>
          </content>
       </ScrollPane>
    </children>

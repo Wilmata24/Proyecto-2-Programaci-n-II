@@ -64,46 +64,46 @@ public class Lógica {
         return gridPaneMapa;
     }
     
-    double orgSceneX;
-    double orgSceneY;
-    double orgTranslateX;
-    double orgTranslateY;
-    
-    public void moverIconos(ImageView imageView) {
-        
-        EventHandler<MouseEvent> imageViewOnMousePressedEventHandler
-                = new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-                orgSceneX = event.getSceneX();
-                orgSceneY = event.getSceneY();
-                orgTranslateX = ((ImageView) (event.getSource())).getTranslateX();
-                orgTranslateY = ((ImageView) (event.getSource())).getTranslateY();
-
-            }
-        };
-
-        EventHandler<MouseEvent> imageViewOnMouseDraggedEventHandler
-                = new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-                double offsetX = event.getSceneX() - orgSceneX;
-                double offsetY = event.getSceneY() - orgSceneY;
-                double newTranslateX = orgTranslateX + offsetX;
-                double newTranslateY = orgTranslateY + offsetY;
-                 
-                ((ImageView) (event.getSource())).setTranslateX(newTranslateX);
-                ((ImageView) (event.getSource())).setTranslateY(newTranslateY);
-                
-            }
-        };
-
-        imageView.setOnMousePressed(imageViewOnMousePressedEventHandler);
-        imageView.setOnMouseDragged(imageViewOnMouseDraggedEventHandler);
-    }
-    
+//    double orgSceneX;
+//    double orgSceneY;
+//    double orgTranslateX;
+//    double orgTranslateY;
+//    
+//    public void moverIconos(ImageView imageView) {
+//        
+//        EventHandler<MouseEvent> imageViewOnMousePressedEventHandler
+//                = new EventHandler<MouseEvent>() {
+//
+//            @Override
+//            public void handle(MouseEvent event) {
+//                orgSceneX = event.getSceneX();
+//                orgSceneY = event.getSceneY();
+//                orgTranslateX = ((ImageView) (event.getSource())).getTranslateX();
+//                orgTranslateY = ((ImageView) (event.getSource())).getTranslateY();
+//
+//            }
+//        };
+//
+//        EventHandler<MouseEvent> imageViewOnMouseDraggedEventHandler
+//                = new EventHandler<MouseEvent>() {
+//
+//            @Override
+//            public void handle(MouseEvent event) {
+//                double offsetX = event.getSceneX() - orgSceneX;
+//                double offsetY = event.getSceneY() - orgSceneY;
+//                double newTranslateX = orgTranslateX + offsetX;
+//                double newTranslateY = orgTranslateY + offsetY;
+//                 
+//                ((ImageView) (event.getSource())).setTranslateX(newTranslateX);
+//                ((ImageView) (event.getSource())).setTranslateY(newTranslateY);
+//                
+//            }
+//        };
+//
+//        imageView.setOnMousePressed(imageViewOnMousePressedEventHandler);
+//        imageView.setOnMouseDragged(imageViewOnMouseDraggedEventHandler);
+//    }
+//    
     public void fileChooserGuardar(MenuItem menuItemGuardar) {
         FileChooser chooser = new FileChooser();
 

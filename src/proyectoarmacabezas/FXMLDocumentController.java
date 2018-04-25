@@ -51,7 +51,8 @@ public class FXMLDocumentController implements Initializable {
     private GridPane gridPaneMapa;
     @FXML private MenuItem menuItemSalir;
     @FXML private VBox vBoxIconos;
- 
+    @FXML private ImageView pruebaImageView;
+    
     @FXML
     public void buttonAceptarAccion(ActionEvent event) {
         
@@ -75,8 +76,10 @@ public class FXMLDocumentController implements Initializable {
         menuBar.setPadding(new Insets(10, 200, 10, 300));
         menuBar.setStyle("-fx-background-color: #CC9999");
         try {
-//            copiaImagen(vBoxIconos());
+            
                vBoxIconos();
+               muestraImage(imagenAux);
+               
         } catch (Exception ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -107,9 +110,14 @@ public class FXMLDocumentController implements Initializable {
     private void exportar(ActionEvent event) {
         logica.fileChooserExportar(menuItemExportar);
     }
-    
-    public void vBoxIconos() throws Exception {
+    /**
+     * Recibe los íconos desde un archivo .xml y los coloca en un vBox,
+     * al darle click sobre estos íconos les da una acción.
+     */
+    Image imagenAux = null;
+    public Image vBoxIconos() throws Exception {
         ImageView imageView = null;
+        
         AdministradorArchivosXml archivo = new AdministradorArchivosXml();
         ArrayList lista = archivo.leerArchivo();
         for (int i = 0; i < lista.size(); i++) {
@@ -117,17 +125,29 @@ public class FXMLDocumentController implements Initializable {
             imageView = new ImageView();
             imageView.setImage(imagen);
             //detectaImageView(imageView);
+            
             imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-    @Override
+            
+       @Override
     
     public void handle(MouseEvent event) {
+
         if(event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+              imagenAux = imagen;
+             
             System.out.println("hola");
              }  
     }});
             vBoxIconos.getChildren().add(imageView);
     }
-            
+                return imagenAux;
         }
+    
+  public void muestraImage(Image imageAux){
+      
+      pruebaImageView.setImage(imageAux);
+      
+      
+  }
     
 }
