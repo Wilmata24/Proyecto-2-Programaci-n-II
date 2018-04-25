@@ -17,12 +17,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -61,7 +63,7 @@ public class FXMLDocumentController implements Initializable {
             gridPaneMapa = logica.mostrarMapa(Integer.parseInt(textFieldLargo.getText()), Integer.parseInt(textFieldAncho.getText()));
             //Agregar mapa al AnchorPane
             anchorPaneMapa.getChildren().add(gridPaneMapa);
-            logica.setupGestureTarget(gridPaneMapa);
+            //setupGestureTarget(gridPaneMapa);
         }
         
     }
@@ -73,10 +75,16 @@ public class FXMLDocumentController implements Initializable {
         menuBar.setPadding(new Insets(10, 200, 10, 300));
         menuBar.setStyle("-fx-background-color: #CC9999");
         try {
-            vBoxIconos();
+//            copiaImagen(vBoxIconos());
+               vBoxIconos();
         } catch (Exception ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
+//        try {
+//            vBoxIconos();
+//        } catch (Exception ex) {
+//            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
     }
     
@@ -101,14 +109,25 @@ public class FXMLDocumentController implements Initializable {
     }
     
     public void vBoxIconos() throws Exception {
+        ImageView imageView = null;
         AdministradorArchivosXml archivo = new AdministradorArchivosXml();
         ArrayList lista = archivo.leerArchivo();
         for (int i = 0; i < lista.size(); i++) {
             Image imagen = new Image(archivo.leerArchivo().get(i).getUrl());
-            ImageView imageView = new ImageView();
+            imageView = new ImageView();
             imageView.setImage(imagen);
+            //detectaImageView(imageView);
+            imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+    @Override
+    
+    public void handle(MouseEvent event) {
+        if(event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+            System.out.println("hola");
+             }  
+    }});
             vBoxIconos.getChildren().add(imageView);
-        }
     }
+            
+        }
     
 }
