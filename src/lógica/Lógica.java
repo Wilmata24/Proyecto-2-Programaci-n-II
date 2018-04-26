@@ -31,14 +31,16 @@ import dominio.Icono;
 public class Lógica {
 
     private GridPane gridPaneMapa;
-
-    /**
-    * Método para mostrar el mapa mediante una matriz, el tamaño es definido por el usuario con
-    * los parámetros primerParametro y segundoParametro, el primer for recorre la matriz de Image
-    * y el segundo for la matriz de ImageView, mientras que las variables m y n van aumentando para
-    * llenar el GridPane con las imágenes
-     */
     ImageView imageViewMuestraMapa[][];
+    /**
+     * Método para mostrar el mapa mediante una matriz, el tamaño es definido por el usuario con
+     * los parámetros primerParametro y segundoParametro, el primer for recorre la matriz de Image
+     * y el segundo for la matriz de ImageView, mientras que las variables m y n van aumentando para
+     * llenar el GridPane con las imágenes
+     * @param filas
+     * @param columnas
+     * @return 
+     */
     public GridPane mostrarMapa(int filas, int columnas) {
 
         gridPaneMapa = new GridPane();
@@ -112,7 +114,10 @@ public class Lógica {
             }
         }  
     }  
-
+    /**
+     *
+     * @param menuItemGuardar
+     */
     public void fileChooserGuardar(MenuItem menuItemGuardar) {
         FileChooser chooser = new FileChooser();
 
@@ -127,7 +132,11 @@ public class Lógica {
         }
         
     }
-    
+    /**
+     * 
+     * @param contenido
+     * @param archivo 
+     */
     private void guardarDocumento(String contenido, File archivo) {
         try {
             FileWriter fileWriter = null;
@@ -142,7 +151,10 @@ public class Lógica {
     
     private File archivo;
     private static boolean DEBUG = false;
-    
+    /**
+     * 
+     * @param menuItemAbrir 
+     */
     public void fileChooserAbrirDocumento(MenuItem menuItemAbrir) {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Open File");
@@ -164,7 +176,10 @@ public class Lógica {
 //            princpalLogTextArea.appendText("Opening " + nombreArchivo + System.lineSeparator());
 //        }
     }
-    
+    /**
+     * 
+     * @param menuItemExportar 
+     */
     public void fileChooserExportar(MenuItem menuItemExportar) {
         FileChooser chooser = new FileChooser();
 

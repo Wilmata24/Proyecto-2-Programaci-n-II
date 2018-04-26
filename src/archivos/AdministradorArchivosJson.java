@@ -49,7 +49,7 @@ public class AdministradorArchivosJson {
     /*
     * Escribir en archivo
     */
-    public Boolean guardarEnArchivo(String rutaArchivo, Icono icono) {
+    public Boolean guardarEnArchivo(String rutaArchivo, String archivo) {
         try {
 
             BufferedWriter escritor = new BufferedWriter(new FileWriter(rutaArchivo));
@@ -58,7 +58,7 @@ public class AdministradorArchivosJson {
             //Generar estructura Json
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             //guardar a archivo
-            gson.toJson(icono, icono.getClass(), escritorJson);
+            gson.toJson(archivo, archivo.getClass(), escritorJson);
 
             // cerrar descriptores de archivo
             escritorJson.close();
