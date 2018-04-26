@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="345.0" prefWidth="518.0" style="-fx-background-color: #CC9999;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="proyectoarmacabezas.InterfazAyudaController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="231.0" layoutY="59.0" text="Ayuda">
+         <font>
+            <Font name="Times New Roman" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="121.0" layoutY="92.0" prefHeight="23.0" prefWidth="255.0" text="-Ingresar cantidad de filas y columnas a llenar " textAlignment="CENTER">
+         <font>
+            <Font name="Times New Roman" size="13.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" cache="true" layoutX="188.0" layoutY="115.0" prefHeight="23.0" prefWidth="134.0" text="-Presionar botón aceptar" textAlignment="CENTER">
+         <font>
+            <Font name="Times New Roman" size="13.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="118.0" layoutY="138.0" prefHeight="17.0" prefWidth="323.0" text="-A continuación se mostrará el mapa con el tamaño elegido">
+         <font>
+            <Font name="Times New Roman" size="13.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="76.0" layoutY="164.0" prefHeight="17.0" prefWidth="379.0" text="-Al dar doble click sobre los íconos que se encuentran a la izquierda, se">
+         <font>
+            <Font name="Times New Roman" size="13.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="73.0" layoutY="181.0" prefHeight="17.0" prefWidth="414.0" text="copiará la imagen, luego debe dar un click en el cuadro que desea pegarla">
+         <font>
+            <Font name="Times New Roman" size="13.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="73.0" layoutY="207.0" prefHeight="17.0" prefWidth="386.0" text="-Si desea guardar el trabajo para continuar luego, debe presionar guardar" textAlignment="CENTER">
+         <font>
+            <Font name="Times New Roman" size="13.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="82.0" layoutY="224.0" prefHeight="17.0" prefWidth="369.0" text="en la barra de herramientas, por el contrario si terminó su trabajo debe" textAlignment="CENTER">
+         <font>
+            <Font name="Times New Roman" size="13.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="85.0" layoutY="241.0" prefHeight="17.0" prefWidth="362.0" text="presionar exportar para guardar el documento en formato .jpg o .png" textAlignment="JUSTIFY">
+         <font>
+            <Font name="Times New Roman" size="13.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="66.0" layoutY="267.0" prefHeight="17.0" prefWidth="379.0" text="-Para seguir trabajando en un documento guardado anteriormente debe " textAlignment="CENTER">
+         <font>
+            <Font name="Times New Roman" size="13.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="90.0" layoutY="284.0" prefHeight="17.0" prefWidth="330.0" text="presionar abrir documento y buscar el documento que necesita" textAlignment="CENTER">
+         <font>
+            <Font name="Times New Roman" size="13.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="imageViewSigno" fitHeight="68.0" fitWidth="75.0" layoutX="395.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>

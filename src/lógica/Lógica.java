@@ -32,19 +32,19 @@ public class Lógica {
 
     private GridPane gridPaneMapa;
 
-    /*
+    /**
     * Método para mostrar el mapa mediante una matriz, el tamaño es definido por el usuario con
     * los parámetros primerParametro y segundoParametro, el primer for recorre la matriz de Image
     * y el segundo for la matriz de ImageView, mientras que las variables m y n van aumentando para
     * llenar el GridPane con las imágenes
      */
-    
+    ImageView imageViewMuestraMapa[][];
     public GridPane mostrarMapa(int filas, int columnas) {
 
         gridPaneMapa = new GridPane();
         //Matriz de imágenes con tamaño definido por el usuario
         Image muestraMapa[][] = new Image[filas][columnas];
-        ImageView imageViewMuestraMapa[][] = new ImageView[filas][columnas];
+        imageViewMuestraMapa= new ImageView[filas][columnas];
 
         int m = 0;
         int n = 0;
@@ -64,46 +64,55 @@ public class Lógica {
         return gridPaneMapa;
     }
     
-//    double orgSceneX;
-//    double orgSceneY;
-//    double orgTranslateX;
-//    double orgTranslateY;
-//    
-//    public void moverIconos(ImageView imageView) {
-//        
-//        EventHandler<MouseEvent> imageViewOnMousePressedEventHandler
-//                = new EventHandler<MouseEvent>() {
-//
-//            @Override
-//            public void handle(MouseEvent event) {
-//                orgSceneX = event.getSceneX();
-//                orgSceneY = event.getSceneY();
-//                orgTranslateX = ((ImageView) (event.getSource())).getTranslateX();
-//                orgTranslateY = ((ImageView) (event.getSource())).getTranslateY();
-//
-//            }
-//        };
-//
-//        EventHandler<MouseEvent> imageViewOnMouseDraggedEventHandler
-//                = new EventHandler<MouseEvent>() {
-//
-//            @Override
-//            public void handle(MouseEvent event) {
-//                double offsetX = event.getSceneX() - orgSceneX;
-//                double offsetY = event.getSceneY() - orgSceneY;
-//                double newTranslateX = orgTranslateX + offsetX;
-//                double newTranslateY = orgTranslateY + offsetY;
-//                 
-//                ((ImageView) (event.getSource())).setTranslateX(newTranslateX);
-//                ((ImageView) (event.getSource())).setTranslateY(newTranslateY);
-//                
-//            }
-//        };
-//
-//        imageView.setOnMousePressed(imageViewOnMousePressedEventHandler);
-//        imageView.setOnMouseDragged(imageViewOnMouseDraggedEventHandler);
-//    }
-//    
+    /**
+     * 
+     * @param url recibe la dirección de la imagen seleccionada previamente
+     * @param fila cantidad de filas del mapa
+     * @param columna cantidad de columnas del mapa
+     */
+    public void detectaClickMapa(String url, int fila, int columna) {
+        int matrizEspejo[][] = new int[fila][columna];
+        for (int i = 0 ; i < imageViewMuestraMapa.length ; i++) {
+            for (int j = 0 ; j < imageViewMuestraMapa[0].length ; j++) {
+                int auxI = i;
+                int auxJ = j;
+                
+                imageViewMuestraMapa[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        
+                        int llenaEspejo = 1;
+                        for(int filaEspejo= 0 ; filaEspejo < matrizEspejo.length ; filaEspejo++) {
+                            for(int columnaEspejo = 0 ; columnaEspejo < matrizEspejo[0].length ; columnaEspejo++){
+                                
+                                Image imagen[][] = new Image[fila][columna];
+                                ImageView imageView[][] = new ImageView[fila][columna];
+                                int columnaGridPane = 0;
+                                int filaGridPane = 0;
+                                for (int filaImageView = 0 ; filaImageView < imageView.length ; filaImageView++) {
+                                    columnaGridPane = 0;
+                                    for (int columnaImageView = 0; columnaImageView < imageView[0].length; columnaImageView++) {
+                                        imagen[auxI][auxJ] = new Image(url);
+                                        imageView[auxI][auxJ] = new ImageView();
+                                        imageView[auxI][auxJ].setImage(imagen[filaImageView][columnaImageView]);
+                                        matrizEspejo[auxI][auxJ] = llenaEspejo;
+                                        GridPane.setConstraints(imageView[auxI][auxJ], columnaGridPane, filaGridPane);
+                                        columnaGridPane++;
+                                        gridPaneMapa.getChildren().add(imageView[auxI][auxJ]);
+
+                                    } 
+                                    filaGridPane++;
+                                } 
+
+                            }
+                        }
+                    }
+                });
+            
+            }
+        }  
+    }  
+
     public void fileChooserGuardar(MenuItem menuItemGuardar) {
         FileChooser chooser = new FileChooser();
 
