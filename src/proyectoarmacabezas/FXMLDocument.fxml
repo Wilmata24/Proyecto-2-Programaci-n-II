@@ -8,7 +8,6 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -37,7 +36,9 @@
             <TextField fx:id="textFieldAncho" layoutX="239.0" layoutY="41.0" prefHeight="25.0" prefWidth="68.0" />
             <Label layoutX="182.0" layoutY="18.0" prefHeight="17.0" prefWidth="44.0" text="Largo:" />
             <Label layoutX="182.0" layoutY="45.0" text="Ancho:" />
-            <Button layoutX="342.0" layoutY="28.0" mnemonicParsing="false" onAction="#buttonAceptarAccion" text="Aceptar" />
+            <Button fx:id="buttonAceptar" layoutX="342.0" layoutY="28.0" mnemonicParsing="false" onAction="#buttonAceptarAccion" text="Aceptar" />
+            <Label fx:id="labelMensaje" layoutX="399.0" layoutY="58.0" prefHeight="17.0" prefWidth="125.0" />
+            <Button fx:id="buttonBorrar" layoutX="413.0" layoutY="29.0" mnemonicParsing="false" onAction="#buttonBorrarAccion" text="Borrar" />
          </children>
       </AnchorPane>
       <ScrollPane layoutX="-6.0" layoutY="43.0" prefHeight="439.0" prefWidth="159.0">
@@ -54,10 +55,7 @@
       </ScrollPane>
       <ScrollPane layoutX="153.0" layoutY="124.0" prefHeight="360.0" prefWidth="545.0">
          <content>
-            <AnchorPane fx:id="anchorPaneMapa" prefHeight="362.0" prefWidth="543.0" style="-fx-background-color: #CC9999;">
-               <children>
-                  <ImageView fx:id="pruebaImageView" fitHeight="150.0" fitWidth="200.0" layoutX="329.0" pickOnBounds="true" preserveRatio="true" />
-               </children></AnchorPane>
+            <AnchorPane fx:id="anchorPaneMapa" prefHeight="362.0" prefWidth="543.0" style="-fx-background-color: #CC9999;" />
          </content>
       </ScrollPane>
    </children>

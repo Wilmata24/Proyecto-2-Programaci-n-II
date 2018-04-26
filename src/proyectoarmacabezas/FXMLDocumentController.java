@@ -1,5 +1,6 @@
 package proyectoarmacabezas;
 
+import archivos.AdministradorArchivosJson;
 import archivos.AdministradorArchivosXml;
 import dominio.Icono;
 import java.io.IOException;
@@ -24,6 +25,8 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.ClipboardContent;
@@ -55,41 +58,55 @@ public class FXMLDocumentController implements Initializable {
     @FXML private MenuItem menuItemExportar;
     @FXML private MenuBar menuBar;
     @FXML private VBox vBoxIconos;
-    @FXML private ImageView pruebaImageView;
+    @FXML private Button buttonAceptar;
+    @FXML private Button buttonBorrar;
+    @FXML private Label labelMensaje;
     private GridPane gridPaneMapa;
     
     @FXML
     public void buttonAceptarAccion(ActionEvent event) throws Exception {
-
+        
+        try {
         if (Integer.parseInt(textFieldLargo.getText()) <= 0 || Integer.parseInt(textFieldAncho.getText()) <= 0) {
-            System.out.println("Valor incorrecto");
-        } else if (textFieldLargo.getText().equals(null) || textFieldAncho.getText().equals(null)) {
-            System.out.println("Ingrese los dos valores.");
+            labelMensaje.setText("Valor incorrecto");
         } else {
             gridPaneMapa = logica.mostrarMapa(Integer.parseInt(textFieldLargo.getText()), Integer.parseInt(textFieldAncho.getText()));
             //Agregar mapa al AnchorPane
             anchorPaneMapa.getChildren().add(gridPaneMapa);
-            //setupGestureTarget(gridPaneMapa);
+            buttonBorrar.setDisable(false);
+            buttonAceptar.setDisable(true);
         }
+        }catch (NumberFormatException exception) {
+            labelMensaje.setText("Valor incorrecto");
+            
+        } 
+        
+        
+    }
+ 
+    @FXML
+    public void buttonBorrarAccion(ActionEvent event) throws Exception {
+        gridPaneMapa = logica.mostrarMapa(Integer.parseInt(textFieldLargo.getText()), Integer.parseInt(textFieldAncho.getText()));
+        anchorPaneMapa.getChildren().add(gridPaneMapa);
     }
   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        buttonBorrar.setDisable(true);
         //Relleno y color de la barra de menú
         menuBar.setPadding(new Insets(10, 200, 10, 300));
         menuBar.setStyle("-fx-background-color: #CC9999");
         try {
             vBoxIconos();
-            
         } catch (Exception ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
+       
     }
     
     @FXML
     private void guardar(ActionEvent event) {
-        logica.fileChooserGuardar(menuItemGuardar);
+        logica.fileChooserGuardar(menuItemGuardar);     
     }
     
     @FXML
@@ -124,9 +141,8 @@ public class FXMLDocumentController implements Initializable {
      * al darle click sobre estos íconos les da una acción.
      */
     Image imagenAux = null;
-
     public void vBoxIconos() throws Exception {
-
+      
         ImageView imageView = null;
         AdministradorArchivosXml archivo = new AdministradorArchivosXml();
         ArrayList lista = archivo.leerArchivo();
@@ -134,49 +150,35 @@ public class FXMLDocumentController implements Initializable {
             Image imagen = new Image(archivo.leerArchivo().get(i).getUrl());
             imageView = new ImageView();
             imageView.setImage(imagen);
-            //detectaImageView(imageView);
-
+            
             imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
                     String urlImagen = "";
                     int largo = 0;
                     int ancho = 0;
-                    //if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                    if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
                         try {
                             for (int j = 0; j < lista.size(); j++) {
-                                if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
                                 urlImagen = archivo.leerArchivo().get(j).getUrl();
                                 largo = (int) Integer.parseInt(textFieldLargo.getText());
                                 ancho = (int) Integer.parseInt(textFieldAncho.getText());
                                 
                                 if (urlImagen.equals("iconos/facebook.png")) {
                                     logica.detectaClickMapa(urlImagen, largo, ancho);
-                                    
                                 } if (urlImagen.equals("iconos/instagram.png")) {
                                     logica.detectaClickMapa(urlImagen, largo, ancho);
-
-                                } 
                                 }
-                            }
-                            
-                        } catch (Exception ex) {
+                                }
+                            } catch (Exception ex) {
                             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        //logica.detectaClickMapa(urlImagen, largo, ancho);
+                            }
                     }
-                     
-                
+                }             
             });
-            vBoxIconos.getChildren().add(imageView);
+            vBoxIconos.getChildren().add(imageView);  
         }
     }
+    
 
-    public Image muestraImage(Image imageAux)  {
-        pruebaImageView.setImage(imageAux);
-        return imageAux;
-    }
-    
-    
-    
 }
