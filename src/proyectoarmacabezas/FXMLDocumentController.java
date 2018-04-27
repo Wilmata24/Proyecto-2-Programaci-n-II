@@ -21,7 +21,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
@@ -77,6 +76,7 @@ public class FXMLDocumentController implements Initializable {
             labelMensaje.setText("Valor incorrecto");
             
         } 
+        //prueba();
 //        System.out.println(logica.getRowCount(gridPaneMapa));
 //        System.out.println(logica.getColumnsCount(gridPaneMapa));
 
@@ -138,34 +138,33 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void exportarPng(ActionEvent event) {
-    WritableImage image = gridPaneMapa.snapshot(new SnapshotParameters(), null);
-    FileChooser fileChooser = new FileChooser();
-    fileChooser.setTitle("Save Image");
-    // Set extension filter
-    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-    "PNG files (*.png)", "*.png");
-    fileChooser.getExtensionFilters().add(extFilter);
-    // Show save file dialog
-    File file = fileChooser.showSaveDialog(this.dialogStage);
-    if (file != null) {
-    // Make sure it has the correct extension
-    if (!file.getPath().endsWith(".png")) {
-    file = new File(file.getPath() + ".png");
-    }
-    try {
-    ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
-    } catch (IOException e) {
-    // TODO: handle exception here
-    }
-    }
-//File file = new File("chart.png");
-}
+        WritableImage image = gridPaneMapa.snapshot(new SnapshotParameters(), null);
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Image");
+        // Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                "PNG files (*.png)", "*.png");
+        fileChooser.getExtensionFilters().add(extFilter);
+        // Show save file dialog
+        File file = fileChooser.showSaveDialog(this.dialogStage);
+        if (file != null) {
+            // Make sure it has the correct extension
+            if (!file.getPath().endsWith(".png")) {
+                file = new File(file.getPath() + ".png");
+            }
+            try {
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+            } catch (IOException e) {
+                // TODO: handle exception here
+            }
+        }
 
-
+    }
 
     private Stage dialogStage;
+
     public void start(Stage dialogStage) {
-    this.dialogStage = dialogStage;
+        this.dialogStage = dialogStage;
     }
     
 
@@ -199,50 +198,172 @@ public class FXMLDocumentController implements Initializable {
      * Recibe los íconos desde un archivo .xml y los coloca en un vBox,
      * al darle click sobre estos íconos les da una acción.
      */
-    Image imagenAux = null;
-    ImageView imageView = null;
+   
     public void vBoxIconos() throws Exception {
-      
-        
+       
         AdministradorArchivos archivo = new AdministradorArchivos();
-        ArrayList lista = archivo.leerArchivo();
-        for (int i = 0; i < lista.size(); i++) {
-            Image imagen = new Image(archivo.leerArchivo().get(i).getUrl());
-            imageView = new ImageView();
-            imageView.setImage(imagen);
-            imageView.setCursor(Cursor.HAND);
-            
-            imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+        Image imagenFacebook = new Image(archivo.leerArchivo().get(0).getUrl());
+        ImageView imageViewFaceboook = new ImageView();
+        imageViewFaceboook.setImage(imagenFacebook);
+        imageViewFaceboook.setCursor(Cursor.HAND);
+        
+        Image imagenInstagram = new Image(archivo.leerArchivo().get(1).getUrl());
+        ImageView imageViewInstagram = new ImageView();
+        imageViewInstagram.setImage(imagenInstagram);
+        imageViewInstagram.setCursor(Cursor.HAND);
+        
+        Image imagenSkype = new Image(archivo.leerArchivo().get(2).getUrl());
+        ImageView imageViewSkype = new ImageView();
+        imageViewSkype.setImage(imagenSkype);
+        imageViewSkype.setCursor(Cursor.HAND);
+        
+        Image imagenSnapchat = new Image(archivo.leerArchivo().get(3).getUrl());
+        ImageView imageViewSnapchat = new ImageView();
+        imageViewSnapchat.setImage(imagenSnapchat);
+        imageViewSnapchat.setCursor(Cursor.HAND);
+        
+        Image imagenSoundcloud = new Image(archivo.leerArchivo().get(4).getUrl());
+        ImageView imageViewSoundcloud = new ImageView();
+        imageViewSoundcloud.setImage(imagenSoundcloud);
+        imageViewSoundcloud.setCursor(Cursor.HAND);
+        
+        Image imagenTelegram = new Image(archivo.leerArchivo().get(5).getUrl());
+        ImageView imageViewTelegram = new ImageView();
+        imageViewTelegram.setImage(imagenTelegram);
+        imageViewTelegram.setCursor(Cursor.HAND);
+        
+        Image imagenTumblr = new Image(archivo.leerArchivo().get(6).getUrl());
+        ImageView imageViewTumblr = new ImageView();
+        imageViewTumblr.setImage(imagenTumblr);
+        imageViewTumblr.setCursor(Cursor.HAND);
+        
+        Image imagenTwitter = new Image(archivo.leerArchivo().get(7).getUrl());
+        ImageView imageViewTwitter = new ImageView();
+        imageViewTwitter.setImage(imagenTwitter);
+        imageViewTwitter.setCursor(Cursor.HAND);
+        
+        Image imagenWhatsapp = new Image(archivo.leerArchivo().get(8).getUrl());
+        ImageView imageViewWhatsapp = new ImageView();
+        imageViewWhatsapp.setImage(imagenWhatsapp);
+        imageViewWhatsapp.setCursor(Cursor.HAND);
+        
+        Image imagenYoutube = new Image(archivo.leerArchivo().get(9).getUrl());
+        ImageView imageViewYoutube = new ImageView();
+        imageViewYoutube.setImage(imagenYoutube);
+        imageViewYoutube.setCursor(Cursor.HAND);
+      
+            imageViewFaceboook.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    System.out.println(imageView.getImage().toString());
-                    String urlImagen = "";
-                    int largo = 0;
-                    int ancho = 0;
-                    for (int j = 0; j < lista.size(); j++) {
-                        try {
-                            urlImagen = archivo.leerArchivo().get(j).getUrl();
-                            largo = (int) Integer.parseInt(textFieldLargo.getText());
-                            ancho = (int) Integer.parseInt(textFieldAncho.getText());
-                            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                                logica.detectaClickMapa(urlImagen, largo, ancho);
-                            } else if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2 && imageView.getImage().equals("iconos/instagram.png")) {
-                                logica.detectaClickMapa(imageView.getImage().toString(), largo, ancho);
-                            }
-                        } catch (Exception ex) {
-                            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    
-//                                if (urlImagen.equals("iconos/facebook.png")) {
-//                                    logica.detectaClickMapa(urlImagen, largo, ancho);
-//                                } 
-                       
+                    int largo = (int) Integer.parseInt(textFieldLargo.getText());
+                    int ancho = (int) Integer.parseInt(textFieldAncho.getText());
+                    if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                        logica.detectaClickMapa("iconos/facebook.png", largo, ancho);
                     }
                 }             
             });
-            vBoxIconos.getChildren().add(imageView);  
-        }
+            imageViewInstagram.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    int largo = (int) Integer.parseInt(textFieldLargo.getText());
+                    int ancho = (int) Integer.parseInt(textFieldAncho.getText());
+                    if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                        logica.detectaClickMapa("iconos/instagram.png", largo, ancho);
+                    }
+                }             
+            });
+            
+            imageViewSkype.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    int largo = (int) Integer.parseInt(textFieldLargo.getText());
+                    int ancho = (int) Integer.parseInt(textFieldAncho.getText());
+                    if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                        logica.detectaClickMapa("iconos/skype.png", largo, ancho);
+                    }
+                }             
+            });
+            
+            imageViewSnapchat.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    int largo = (int) Integer.parseInt(textFieldLargo.getText());
+                    int ancho = (int) Integer.parseInt(textFieldAncho.getText());
+                    if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                        logica.detectaClickMapa("iconos/snapchat.png", largo, ancho);
+                    }
+                }             
+            });
+            
+            imageViewSoundcloud.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    int largo = (int) Integer.parseInt(textFieldLargo.getText());
+                    int ancho = (int) Integer.parseInt(textFieldAncho.getText());
+                    if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                        logica.detectaClickMapa("iconos/soundcloud.png", largo, ancho);
+                    }
+                }             
+            });
+            
+            imageViewTelegram.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    int largo = (int) Integer.parseInt(textFieldLargo.getText());
+                    int ancho = (int) Integer.parseInt(textFieldAncho.getText());
+                    if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                        logica.detectaClickMapa("iconos/telegram.png", largo, ancho);
+                    }
+                }             
+            });
+            
+            imageViewTumblr.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    int largo = (int) Integer.parseInt(textFieldLargo.getText());
+                    int ancho = (int) Integer.parseInt(textFieldAncho.getText());
+                    if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                        logica.detectaClickMapa("iconos/tumblr.png", largo, ancho);
+                    }
+                }             
+            });
+            
+            imageViewTwitter.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    int largo = (int) Integer.parseInt(textFieldLargo.getText());
+                    int ancho = (int) Integer.parseInt(textFieldAncho.getText());
+                    if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                        logica.detectaClickMapa("iconos/twitter.png", largo, ancho);
+                    }
+                }             
+            });
+            
+            imageViewWhatsapp.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    int largo = (int) Integer.parseInt(textFieldLargo.getText());
+                    int ancho = (int) Integer.parseInt(textFieldAncho.getText());
+                    if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                        logica.detectaClickMapa("iconos/whatsapp.png", largo, ancho);
+                    }
+                }             
+            });
+            
+            imageViewYoutube.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    int largo = (int) Integer.parseInt(textFieldLargo.getText());
+                    int ancho = (int) Integer.parseInt(textFieldAncho.getText());
+                    if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                        logica.detectaClickMapa("iconos/youtube.png", largo, ancho);
+                    }
+                }             
+            });
+            
+            vBoxIconos.getChildren().addAll(imageViewFaceboook, imageViewInstagram, imageViewSkype, imageViewSnapchat, imageViewSoundcloud, 
+                                            imageViewTelegram, imageViewTumblr, imageViewTwitter, imageViewWhatsapp, imageViewYoutube);  
     }
-    
-
+  
 }
