@@ -1,9 +1,6 @@
 
 package proyectoarmacabezas;
 
-import archivos.AdministradorArchivosXml;
-import dominio.Icono;
-import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,17 +29,7 @@ public class ProyectoArmacabezas extends Application {
      */
     public static void main(String[] args) throws Exception {
         launch(args);
-//        ArrayList<Icono> lista = new ArrayList();
-//        
-//        AdministradorArchivosXml ar = new AdministradorArchivosXml();
-//        ar.leerArchivo();
-//        lista = ar.leerArchivo();
-//        for (int i = 0; i < lista.size(); i++) {
-//            Icono icono = new Icono();
-//            
-//            System.out.println(lista.get(i).getUrl());
-//            
-//        }
+
        
     }
     

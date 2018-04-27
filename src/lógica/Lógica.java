@@ -1,26 +1,18 @@
 package lógica;
 
-import archivos.AdministradorArchivosXml;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import proyectoarmacabezas.FXMLDocumentController;
-import dominio.Icono;
 
 /**
  *
@@ -137,7 +129,7 @@ public class Lógica {
      * @param contenido
      * @param archivo 
      */
-    private void guardarDocumento(String contenido, File archivo) {
+    public void guardarDocumento(String contenido, File archivo) {
         try {
             FileWriter fileWriter = null;
 
@@ -176,11 +168,7 @@ public class Lógica {
 //            princpalLogTextArea.appendText("Opening " + nombreArchivo + System.lineSeparator());
 //        }
     }
-    /**
-     * 
-     * @param menuItemExportar 
-     */
-    public void fileChooserExportar(MenuItem menuItemExportar) {
+   public void fileChooserExportar(MenuItem menuItemExportar, File file) {
         FileChooser chooser = new FileChooser();
 
         chooser.getExtensionFilters().addAll(
@@ -188,11 +176,9 @@ public class Lógica {
                 new FileChooser.ExtensionFilter(".png", "*.png")
         );
 
-        File file = chooser.showSaveDialog(menuItemExportar.getParentPopup().getScene().getWindow());
+        file = chooser.showSaveDialog(menuItemExportar.getParentPopup().getScene().getWindow());
         if (file != null) {
             guardarDocumento("", file);
         }
     }
-  
-    
 }

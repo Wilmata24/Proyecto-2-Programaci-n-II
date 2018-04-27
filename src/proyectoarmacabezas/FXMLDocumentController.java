@@ -1,14 +1,14 @@
 package proyectoarmacabezas;
 
-import archivos.AdministradorArchivosJson;
-import archivos.AdministradorArchivosXml;
-import dominio.Icono;
+import archivos.AdministradorArchivos;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -20,26 +20,20 @@ import javafx.scene.layout.GridPane;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 import lógica.Lógica;
 
 /**
@@ -55,7 +49,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML private TextField textFieldAncho;
     @FXML private MenuItem menuItemGuardar;
     @FXML private MenuItem menuItemAbrir;
-    @FXML private MenuItem menuItemExportar;
+    @FXML private MenuItem menuItemExportarJpg;
+    @FXML private MenuItem menuItemExportarPng;
     @FXML private MenuBar menuBar;
     @FXML private VBox vBoxIconos;
     @FXML private Button buttonAceptar;
@@ -80,8 +75,7 @@ public class FXMLDocumentController implements Initializable {
             labelMensaje.setText("Valor incorrecto");
             
         } 
-        
-        
+    
     }
  
     @FXML
@@ -120,8 +114,29 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void exportar(ActionEvent event) {
-        logica.fileChooserExportar(menuItemExportar);
+    private void exportarPng(ActionEvent event) {
+
+        WritableImage image = gridPaneMapa.snapshot(new SnapshotParameters(), null);
+        File file = new File("captura.png");    
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+        } catch (IOException e) {
+           
+        }
+    }
+    
+    @FXML
+    private void exportarJpg(ActionEvent event) {
+        
+        WritableImage image = gridPaneMapa.snapshot(new SnapshotParameters(), null);
+        
+        // TODO: probably use a file chooser here
+        File file = new File("captura1.jpg");
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "jpg", file);
+        } catch (IOException e) {
+           
+        }
     }
     
     @FXML
@@ -141,38 +156,43 @@ public class FXMLDocumentController implements Initializable {
      * al darle click sobre estos íconos les da una acción.
      */
     Image imagenAux = null;
+    ImageView imageView = null;
     public void vBoxIconos() throws Exception {
       
-        ImageView imageView = null;
-        AdministradorArchivosXml archivo = new AdministradorArchivosXml();
+        
+        AdministradorArchivos archivo = new AdministradorArchivos();
         ArrayList lista = archivo.leerArchivo();
         for (int i = 0; i < lista.size(); i++) {
             Image imagen = new Image(archivo.leerArchivo().get(i).getUrl());
             imageView = new ImageView();
             imageView.setImage(imagen);
+            imageView.setCursor(Cursor.HAND);
             
             imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
+                    System.out.println(imageView.getImage().toString());
                     String urlImagen = "";
                     int largo = 0;
                     int ancho = 0;
-                    if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                    for (int j = 0; j < lista.size(); j++) {
                         try {
-                            for (int j = 0; j < lista.size(); j++) {
-                                urlImagen = archivo.leerArchivo().get(j).getUrl();
-                                largo = (int) Integer.parseInt(textFieldLargo.getText());
-                                ancho = (int) Integer.parseInt(textFieldAncho.getText());
-                                
-                                if (urlImagen.equals("iconos/facebook.png")) {
-                                    logica.detectaClickMapa(urlImagen, largo, ancho);
-                                } if (urlImagen.equals("iconos/instagram.png")) {
-                                    logica.detectaClickMapa(urlImagen, largo, ancho);
-                                }
-                                }
-                            } catch (Exception ex) {
-                            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                            urlImagen = archivo.leerArchivo().get(j).getUrl();
+                            largo = (int) Integer.parseInt(textFieldLargo.getText());
+                            ancho = (int) Integer.parseInt(textFieldAncho.getText());
+                            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                                logica.detectaClickMapa(urlImagen, largo, ancho);
+                            } else if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2 && imageView.getImage().equals("iconos/instagram.png")) {
+                                logica.detectaClickMapa(imageView.getImage().toString(), largo, ancho);
                             }
+                        } catch (Exception ex) {
+                            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    
+//                                if (urlImagen.equals("iconos/facebook.png")) {
+//                                    logica.detectaClickMapa(urlImagen, largo, ancho);
+//                                } 
+                       
                     }
                 }             
             });
