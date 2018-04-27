@@ -173,7 +173,7 @@ public class Lógica {
         FileChooser chooser = new FileChooser();
 
         chooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter(".jpg", "*.png"),
+                new FileChooser.ExtensionFilter(".jpg", "*.jpg"),
                 new FileChooser.ExtensionFilter(".png", "*.png")
         );
 

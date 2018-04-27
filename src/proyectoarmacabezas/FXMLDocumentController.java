@@ -33,6 +33,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import lógica.Lógica;
@@ -65,7 +66,7 @@ public class FXMLDocumentController implements Initializable {
         try {
         if (Integer.parseInt(textFieldLargo.getText()) <= 0 || Integer.parseInt(textFieldAncho.getText()) <= 0) {
             labelMensaje.setText("Valor incorrecto");
-        } else {
+        } else if(isNumeric(textFieldAncho.getText(), textFieldLargo.getText())) {
             gridPaneMapa = logica.mostrarMapa(Integer.parseInt(textFieldLargo.getText()), Integer.parseInt(textFieldAncho.getText()));
             //Agregar mapa al AnchorPane
             anchorPaneMapa.getChildren().add(gridPaneMapa);
@@ -76,9 +77,25 @@ public class FXMLDocumentController implements Initializable {
             labelMensaje.setText("Valor incorrecto");
             
         } 
-        System.out.println(logica.getRowCount(gridPaneMapa));
-        System.out.println(logica.getColumnsCount(gridPaneMapa));
+//        System.out.println(logica.getRowCount(gridPaneMapa));
+//        System.out.println(logica.getColumnsCount(gridPaneMapa));
 
+    }
+    
+    @FXML
+    public static boolean isNumeric(String cadena1, String cadena2) {
+
+        boolean resultado;
+
+        try {
+            Integer.parseInt(cadena1);
+            Integer.parseInt(cadena2);
+            resultado = true;
+        } catch (NumberFormatException excepcion) {
+            resultado = false;
+        }
+
+        return resultado;
     }
     
     
@@ -121,16 +138,37 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void exportarPng(ActionEvent event) {
+    WritableImage image = gridPaneMapa.snapshot(new SnapshotParameters(), null);
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Save Image");
+    // Set extension filter
+    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+    "PNG files (*.png)", "*.png");
+    fileChooser.getExtensionFilters().add(extFilter);
+    // Show save file dialog
+    File file = fileChooser.showSaveDialog(this.dialogStage);
+    if (file != null) {
+    // Make sure it has the correct extension
+    if (!file.getPath().endsWith(".png")) {
+    file = new File(file.getPath() + ".png");
+    }
+    try {
+    ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+    } catch (IOException e) {
+    // TODO: handle exception here
+    }
+    }
+//File file = new File("chart.png");
+}
 
-        WritableImage image = gridPaneMapa.snapshot(new SnapshotParameters(), null);
-        File file = new File("captura.png");    
-        try {
-            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
-        } catch (IOException e) {
-           
-        }
+
+
+    private Stage dialogStage;
+    public void start(Stage dialogStage) {
+    this.dialogStage = dialogStage;
     }
     
+
     @FXML
     private void exportarJpg(ActionEvent event) {
         
