@@ -65,7 +65,8 @@ public class Lógica {
      * @param fila cantidad de filas del mapa
      * @param columna cantidad de columnas del mapa
      */
-    public void detectaClickMapa(String url, int fila, int columna) {
+    String filasColumnas = "";
+    public String detectaClickMapa(String url, int fila, int columna) {
         int matrizEspejo[][] = new int[fila][columna];
         for (int i = 0 ; i < imageViewMuestraMapa.length ; i++) {
             for (int j = 0 ; j < imageViewMuestraMapa[0].length ; j++) {
@@ -75,7 +76,7 @@ public class Lógica {
                 imageViewMuestraMapa[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        
+                        filasColumnas = "[" + auxI + "]" + "," + "[" + auxJ + "]";
                         int llenaEspejo = 1;
                         for(int filaEspejo= 0 ; filaEspejo < matrizEspejo.length ; filaEspejo++) {
                             for(int columnaEspejo = 0 ; columnaEspejo < matrizEspejo[0].length ; columnaEspejo++){
@@ -87,14 +88,17 @@ public class Lógica {
                                 for (int filaImageView = 0 ; filaImageView < imageView.length ; filaImageView++) {
                                     columnaGridPane = 0;
                                     for (int columnaImageView = 0; columnaImageView < imageView[0].length; columnaImageView++) {
+                                   
                                         imagen[auxI][auxJ] = new Image(url);
                                         imageView[auxI][auxJ] = new ImageView();
                                         imageView[auxI][auxJ].setImage(imagen[filaImageView][columnaImageView]);
                                         matrizEspejo[auxI][auxJ] = llenaEspejo;
+
                                         GridPane.setConstraints(imageView[auxI][auxJ], columnaGridPane, filaGridPane);
                                         columnaGridPane++;
+                                        
                                         gridPaneMapa.getChildren().add(imageView[auxI][auxJ]);
-
+                                        
                                     } 
                                     filaGridPane++;
                                 } 
@@ -105,7 +109,8 @@ public class Lógica {
                 });
             
             }
-        }  
+        } 
+        return filasColumnas;
     }  
     /**
      *

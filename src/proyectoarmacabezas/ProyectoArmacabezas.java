@@ -1,6 +1,7 @@
 
 package proyectoarmacabezas;
 
+import archivos.AdministradorArchivos;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,7 +30,7 @@ public class ProyectoArmacabezas extends Application {
      */
     public static void main(String[] args) throws Exception {
         launch(args);
-
+        AdministradorArchivos administradorArchivos = new AdministradorArchivos();
        
     }
     

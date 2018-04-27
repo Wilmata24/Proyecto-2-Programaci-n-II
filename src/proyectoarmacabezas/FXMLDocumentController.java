@@ -45,6 +45,7 @@ import lógica.Lógica;
 public class FXMLDocumentController implements Initializable {
     
     Lógica logica = new Lógica();
+    AdministradorArchivos administradorArchivos = new AdministradorArchivos();
     @FXML private AnchorPane anchorPaneMapa;
     @FXML private TextField textFieldLargo;
     @FXML private TextField textFieldAncho;
@@ -58,6 +59,9 @@ public class FXMLDocumentController implements Initializable {
     @FXML private Button buttonBorrar;
     @FXML private Label labelMensaje;
     private GridPane gridPaneMapa;
+    ArrayList<Object> listaUrl = new ArrayList<>();
+    ArrayList<Object> listaPosicionIcono = new ArrayList<>();
+
     
     @FXML
     public void buttonAceptarAccion(ActionEvent event) throws Exception {
@@ -123,7 +127,8 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void guardar(ActionEvent event) {
-        logica.fileChooserGuardar(menuItemGuardar);     
+        //logica.fileChooserGuardar(menuItemGuardar);     
+       administradorArchivos.guardarEnArchivo(listaUrl, listaPosicionIcono, logica.getRowCount(gridPaneMapa), logica.getColumnsCount(gridPaneMapa), "File");
     }
     
     @FXML
@@ -259,7 +264,8 @@ public class FXMLDocumentController implements Initializable {
                     int largo = (int) Integer.parseInt(textFieldLargo.getText());
                     int ancho = (int) Integer.parseInt(textFieldAncho.getText());
                     if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                        logica.detectaClickMapa("iconos/facebook.png", largo, ancho);
+                         listaPosicionIcono.add(logica.detectaClickMapa("iconos/facebook.png", largo, ancho));
+                         listaUrl.add("iconos/facebook.png");
                     }
                 }             
             });
@@ -269,7 +275,8 @@ public class FXMLDocumentController implements Initializable {
                     int largo = (int) Integer.parseInt(textFieldLargo.getText());
                     int ancho = (int) Integer.parseInt(textFieldAncho.getText());
                     if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                        logica.detectaClickMapa("iconos/instagram.png", largo, ancho);
+                        listaPosicionIcono.add(logica.detectaClickMapa("iconos/instagram.png", largo, ancho));
+                        listaUrl.add("iconos/instagram.png");
                     }
                 }             
             });
@@ -280,7 +287,8 @@ public class FXMLDocumentController implements Initializable {
                     int largo = (int) Integer.parseInt(textFieldLargo.getText());
                     int ancho = (int) Integer.parseInt(textFieldAncho.getText());
                     if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                        logica.detectaClickMapa("iconos/skype.png", largo, ancho);
+                        listaPosicionIcono.add(logica.detectaClickMapa("iconos/skype.png", largo, ancho));
+                        listaUrl.add("iconos/skype.png");
                     }
                 }             
             });
@@ -291,7 +299,8 @@ public class FXMLDocumentController implements Initializable {
                     int largo = (int) Integer.parseInt(textFieldLargo.getText());
                     int ancho = (int) Integer.parseInt(textFieldAncho.getText());
                     if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                        logica.detectaClickMapa("iconos/snapchat.png", largo, ancho);
+                         listaPosicionIcono.add(logica.detectaClickMapa("iconos/snapchat.png", largo, ancho));
+                        listaUrl.add("iconos/snapchat.png");
                     }
                 }             
             });
@@ -302,7 +311,8 @@ public class FXMLDocumentController implements Initializable {
                     int largo = (int) Integer.parseInt(textFieldLargo.getText());
                     int ancho = (int) Integer.parseInt(textFieldAncho.getText());
                     if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                        logica.detectaClickMapa("iconos/soundcloud.png", largo, ancho);
+                        listaPosicionIcono.add(logica.detectaClickMapa("iconos/soundcloud.png", largo, ancho));
+                        listaUrl.add("iconos/soundcloud.png");
                     }
                 }             
             });
@@ -313,7 +323,8 @@ public class FXMLDocumentController implements Initializable {
                     int largo = (int) Integer.parseInt(textFieldLargo.getText());
                     int ancho = (int) Integer.parseInt(textFieldAncho.getText());
                     if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                        logica.detectaClickMapa("iconos/telegram.png", largo, ancho);
+                         listaPosicionIcono.add(logica.detectaClickMapa("iconos/telegram.png", largo, ancho));
+                        listaUrl.add("iconos/telegram.png");
                     }
                 }             
             });
@@ -324,7 +335,8 @@ public class FXMLDocumentController implements Initializable {
                     int largo = (int) Integer.parseInt(textFieldLargo.getText());
                     int ancho = (int) Integer.parseInt(textFieldAncho.getText());
                     if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                        logica.detectaClickMapa("iconos/tumblr.png", largo, ancho);
+                         listaPosicionIcono.add(logica.detectaClickMapa("iconos/tumblr.png", largo, ancho));
+                        listaUrl.add("iconos/tumblr.png");
                     }
                 }             
             });
@@ -335,7 +347,8 @@ public class FXMLDocumentController implements Initializable {
                     int largo = (int) Integer.parseInt(textFieldLargo.getText());
                     int ancho = (int) Integer.parseInt(textFieldAncho.getText());
                     if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                        logica.detectaClickMapa("iconos/twitter.png", largo, ancho);
+                         listaPosicionIcono.add(logica.detectaClickMapa("iconos/twitter.png", largo, ancho));
+                        listaUrl.add("iconos/twitter.png");
                     }
                 }             
             });
@@ -346,7 +359,8 @@ public class FXMLDocumentController implements Initializable {
                     int largo = (int) Integer.parseInt(textFieldLargo.getText());
                     int ancho = (int) Integer.parseInt(textFieldAncho.getText());
                     if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                        logica.detectaClickMapa("iconos/whatsapp.png", largo, ancho);
+                         listaPosicionIcono.add(logica.detectaClickMapa("iconos/whatsapp.png", largo, ancho));
+                        listaUrl.add("iconos/whatsapp.png");
                     }
                 }             
             });
@@ -357,7 +371,8 @@ public class FXMLDocumentController implements Initializable {
                     int largo = (int) Integer.parseInt(textFieldLargo.getText());
                     int ancho = (int) Integer.parseInt(textFieldAncho.getText());
                     if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                        logica.detectaClickMapa("iconos/youtube.png", largo, ancho);
+                        listaPosicionIcono.add(logica.detectaClickMapa("iconos/youtube.png", largo, ancho));
+                        listaUrl.add("iconos/youtube.png");
                     }
                 }             
             });
