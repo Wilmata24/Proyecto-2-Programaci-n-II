@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -180,5 +181,33 @@ public class Lógica {
         if (file != null) {
             guardarDocumento("", file);
         }
+    }
+   
+   public int getRowCount(GridPane pane) {
+        int numRows = pane.getRowConstraints().size();
+        for (int i = 0; i < pane.getChildren().size(); i++) {
+            Node child = pane.getChildren().get(i);
+            if (child.isManaged()) {
+                Integer rowIndex = GridPane.getRowIndex(child);
+                if(rowIndex != null){
+                    numRows = Math.max(numRows,rowIndex+1);
+                }
+            }
+        }
+        return numRows;
+    }
+    
+    public int getColumnsCount(GridPane pane) {
+        int numColumns = pane.getColumnConstraints().size();
+        for (int i = 0; i < pane.getChildren().size(); i++) {
+            Node child = pane.getChildren().get(i);
+            if (child.isManaged()) {
+                Integer columnIndex = GridPane.getColumnIndex(child);
+                if(columnIndex != null){
+                    numColumns = Math.max(numColumns,columnIndex+1);
+                }
+            }
+        }
+        return numColumns;
     }
 }

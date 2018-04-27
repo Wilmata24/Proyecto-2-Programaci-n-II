@@ -16,6 +16,7 @@ import com.google.gson.stream.JsonWriter;
 import dominio.Icono;
 import java.io.File;
 import java.util.ArrayList;
+import javafx.scene.layout.GridPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
@@ -31,7 +32,7 @@ public class AdministradorArchivos {
     /*
     * Leer de archivo
     */
-    public Icono leerArchivo(String nombreArchivo) {
+    public Icono leerArchivoJson(String nombreArchivo) {
       
         try {
             BufferedReader lector = new BufferedReader(new FileReader(nombreArchivo));

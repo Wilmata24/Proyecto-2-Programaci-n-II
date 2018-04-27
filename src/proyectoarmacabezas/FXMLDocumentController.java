@@ -21,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
@@ -75,8 +76,12 @@ public class FXMLDocumentController implements Initializable {
             labelMensaje.setText("Valor incorrecto");
             
         } 
-    
+        System.out.println(logica.getRowCount(gridPaneMapa));
+        System.out.println(logica.getColumnsCount(gridPaneMapa));
+
     }
+    
+    
  
     @FXML
     public void buttonBorrarAccion(ActionEvent event) throws Exception {
@@ -86,6 +91,7 @@ public class FXMLDocumentController implements Initializable {
   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         buttonBorrar.setDisable(true);
         //Relleno y color de la barra de menú
         menuBar.setPadding(new Insets(10, 200, 10, 300));
