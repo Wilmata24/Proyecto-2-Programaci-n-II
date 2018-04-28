@@ -19,18 +19,13 @@
             <items>
               <MenuItem fx:id="menuItemGuardar" mnemonicParsing="false" onAction="#guardar" text="Guardar" />
                   <MenuItem fx:id="menuItemAbrir" mnemonicParsing="false" onAction="#abrirDocumento" text="Abrir documento" />
-                  <Menu mnemonicParsing="false" text="Exportar">
-                    <items>
-                      <MenuItem fx:id="menuItemExportarJpg" mnemonicParsing="false" onAction="#exportarJpg" text="Exportar a JPG" />
-                        <MenuItem fx:id="menuItemExportarPng" mnemonicParsing="false" onAction="#exportarPng" text="Exportar a PNG" />
-                    </items>
-                  </Menu>
+                  <MenuItem fx:id="menuItemExportar" mnemonicParsing="false" onAction="#exportar" text="Exportar" />
                   <MenuItem fx:id="menuItemSalir" mnemonicParsing="false" onAction="#salir" text="Salir" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Ayuda">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#menuItemAyuda" text="Manual" />
+              <MenuItem fx:id="menuItemManual" mnemonicParsing="false" onAction="#menuItemAyuda" text="Manual" />
             </items>
           </Menu>
         </menus>

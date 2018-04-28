@@ -5,14 +5,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 import proyectoarmacabezas.FXMLDocumentController;
 
 /**
@@ -27,8 +32,8 @@ public class Lógica {
     ImageView imageViewMuestraMapa[][];
     /**
      * Método para mostrar el mapa mediante una matriz, el tamaño es definido por el usuario con
-     * los parámetros primerParametro y segundoParametro, el primer for recorre la matriz de Image
-     * y el segundo for la matriz de ImageView, mientras que las variables m y n van aumentando para
+     * los parámetros filas y columnas, el primer for recorre la matriz de Image
+     * y el segundo for la matriz de ImageView, mientras que las variables columna y fila van aumentando para
      * llenar el GridPane con las imágenes
      * @param filas
      * @param columnas
@@ -41,31 +46,33 @@ public class Lógica {
         Image muestraMapa[][] = new Image[filas][columnas];
         imageViewMuestraMapa= new ImageView[filas][columnas];
 
-        int m = 0;
-        int n = 0;
+        int columna = 0;
+        int fila = 0;
         for (int i = 0; i < muestraMapa.length; i++) {
-            m = 0;
+            columna = 0;
             for (int j = 0; j < muestraMapa[0].length; j++) {
                 muestraMapa[i][j] = new Image("/iconos/cuadrado.jpg");
                 imageViewMuestraMapa[i][j] = new ImageView();
                 imageViewMuestraMapa[i][j].setImage(muestraMapa[i][j]);
 
-                GridPane.setConstraints(imageViewMuestraMapa[i][j], m, n);
-                m++;
+                GridPane.setConstraints(imageViewMuestraMapa[i][j], columna, fila);
+                columna++;
                 gridPaneMapa.getChildren().add(imageViewMuestraMapa[i][j]);
             }
-            n++;
+            fila++;
         }
         return gridPaneMapa;
     }
     
+    //String filasColumnas = "";
     /**
      * 
      * @param url recibe la dirección de la imagen seleccionada previamente
      * @param fila cantidad de filas del mapa
      * @param columna cantidad de columnas del mapa
+     * @return 
      */
-    String filasColumnas = "";
+    String filasColumnas; 
     public String detectaClickMapa(String url, int fila, int columna) {
         int matrizEspejo[][] = new int[fila][columna];
         for (int i = 0 ; i < imageViewMuestraMapa.length ; i++) {
@@ -79,8 +86,7 @@ public class Lógica {
                         filasColumnas = "[" + auxI + "]" + "," + "[" + auxJ + "]";
                         int llenaEspejo = 1;
                         for(int filaEspejo= 0 ; filaEspejo < matrizEspejo.length ; filaEspejo++) {
-                            for(int columnaEspejo = 0 ; columnaEspejo < matrizEspejo[0].length ; columnaEspejo++){
-                                
+                            for(int columnaEspejo = 0 ; columnaEspejo < matrizEspejo[0].length ; columnaEspejo++){                               
                                 Image imagen[][] = new Image[fila][columna];
                                 ImageView imageView[][] = new ImageView[fila][columna];
                                 int columnaGridPane = 0;
@@ -88,30 +94,25 @@ public class Lógica {
                                 for (int filaImageView = 0 ; filaImageView < imageView.length ; filaImageView++) {
                                     columnaGridPane = 0;
                                     for (int columnaImageView = 0; columnaImageView < imageView[0].length; columnaImageView++) {
-                                   
                                         imagen[auxI][auxJ] = new Image(url);
                                         imageView[auxI][auxJ] = new ImageView();
                                         imageView[auxI][auxJ].setImage(imagen[filaImageView][columnaImageView]);
                                         matrizEspejo[auxI][auxJ] = llenaEspejo;
-
                                         GridPane.setConstraints(imageView[auxI][auxJ], columnaGridPane, filaGridPane);
                                         columnaGridPane++;
-                                        
-                                        gridPaneMapa.getChildren().add(imageView[auxI][auxJ]);
-                                        
-                                    } 
-                                    filaGridPane++;
+                                        gridPaneMapa.getChildren().add(imageView[auxI][auxJ]);      
+                                    }
+                                    filaGridPane++;      
                                 } 
-
                             }
                         }
                     }
-                });
-            
+                });            
             }
-        } 
+        }        
         return filasColumnas;
-    }  
+    }
+    
     /**
      *
      * @param menuItemGuardar
@@ -130,6 +131,7 @@ public class Lógica {
         }
         
     }
+    
     /**
      * 
      * @param contenido
@@ -174,45 +176,101 @@ public class Lógica {
 //            princpalLogTextArea.appendText("Opening " + nombreArchivo + System.lineSeparator());
 //        }
     }
-   public void fileChooserExportar(MenuItem menuItemExportar, File file) {
-        FileChooser chooser = new FileChooser();
-
-        chooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter(".jpg", "*.jpg"),
-                new FileChooser.ExtensionFilter(".png", "*.png")
-        );
-
-        file = chooser.showSaveDialog(menuItemExportar.getParentPopup().getScene().getWindow());
+    
+    /**
+     * Abre un FileChooser para exportar el contenido de un GridPane a formato .png
+     * @param gridPane 
+     */
+   public void fileChooserExportar(GridPane gridPane) {
+        WritableImage image = gridPane.snapshot(new SnapshotParameters(), null);
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Image");
+        // Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                "PNG files (*.png)", "*.png");
+        fileChooser.getExtensionFilters().add(extFilter);
+        // Show save file dialog
+        File file = fileChooser.showSaveDialog(this.dialogStage);
         if (file != null) {
-            guardarDocumento("", file);
+            // Make sure it has the correct extension
+            if (!file.getPath().endsWith(".png")) {
+                file = new File(file.getPath() + ".png");
+            }
+            try {
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+            } catch (IOException e) {
+                
+            }
         }
     }
    
-   public int getRowCount(GridPane pane) {
-        int numRows = pane.getRowConstraints().size();
-        for (int i = 0; i < pane.getChildren().size(); i++) {
-            Node child = pane.getChildren().get(i);
-            if (child.isManaged()) {
-                Integer rowIndex = GridPane.getRowIndex(child);
-                if(rowIndex != null){
-                    numRows = Math.max(numRows,rowIndex+1);
+    private Stage dialogStage;
+    /**
+     * Ventana para mostrar el FileChooser
+     * @param dialogStage 
+     */
+    public void start(Stage dialogStage) {
+        this.dialogStage = dialogStage;
+    }
+   
+    /**
+     * Determina la cantidad de filas de un GridPane
+     * @param gridPane, recibe el GridPane del cual se va a determinar la
+     * cantidad de filas
+     * @return cantidad filas
+     */
+    public int getCantidadFilas(GridPane gridPane) {
+        int numFilas = gridPane.getRowConstraints().size();
+        for (int i = 0; i < gridPane.getChildren().size(); i++) {
+            Node node = gridPane.getChildren().get(i);
+            if (node.isManaged()) {
+                Integer indiceFila = GridPane.getRowIndex(node);
+                if (indiceFila != null) {
+                    numFilas = Math.max(numFilas, indiceFila + 1);
                 }
             }
         }
-        return numRows;
+        return numFilas;
     }
     
-    public int getColumnsCount(GridPane pane) {
-        int numColumns = pane.getColumnConstraints().size();
-        for (int i = 0; i < pane.getChildren().size(); i++) {
-            Node child = pane.getChildren().get(i);
-            if (child.isManaged()) {
-                Integer columnIndex = GridPane.getColumnIndex(child);
-                if(columnIndex != null){
-                    numColumns = Math.max(numColumns,columnIndex+1);
+    /**
+     * Determina la cantidad de columnas de un GridPane
+     * @param gridPane, recibe el GridPane del cual se va a determinar la
+     * cantidad de columnas
+     * @return cantidad de columnas
+     */
+    public int getCantidadColumnas(GridPane gridPane) {
+        int numColumnas = gridPane.getColumnConstraints().size();
+        for (int i = 0; i < gridPane.getChildren().size(); i++) {
+            Node node = gridPane.getChildren().get(i);
+            if (node.isManaged()) {
+                Integer indiceColumna = GridPane.getColumnIndex(node);
+                if (indiceColumna != null) {
+                    numColumnas = Math.max(numColumnas, indiceColumna + 1);
                 }
             }
         }
-        return numColumns;
+        return numColumnas;
+    }
+    
+    /**
+     * Determina si los valores que entran como parámetro son números
+     * @param cadena1
+     * @param cadena2
+     * @return 
+     */
+    public static boolean isNumeric(String cadena1, String cadena2) {
+
+        boolean resultado;
+
+        try {
+            Integer.parseInt(cadena1);
+            Integer.parseInt(cadena2);
+            resultado = true;
+        } catch (NumberFormatException excepcion) {
+            resultado = false;
+        }
+
+        return resultado;
     }
 }

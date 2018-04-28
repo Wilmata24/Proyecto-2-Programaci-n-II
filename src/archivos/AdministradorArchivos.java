@@ -16,7 +16,6 @@ import com.google.gson.stream.JsonWriter;
 import dominio.Icono;
 import java.io.File;
 import java.util.ArrayList;
-import javafx.scene.layout.GridPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
@@ -29,9 +28,11 @@ import org.w3c.dom.NodeList;
  * @author Nicole Fonseca
  */
 public class AdministradorArchivos {
-    /*
-    * Leer de archivo
-    */
+    /**
+     * 
+     * @param nombreArchivo
+     * @return 
+     */
     public Icono leerArchivoJson(String nombreArchivo) {
       
         try {
@@ -93,9 +94,15 @@ public class AdministradorArchivos {
 //        }
 
 //}
-    /*
-    * Escribir en archivo
-    */
+    /**
+     * 
+     * @param url
+     * @param posicionIcono
+     * @param columnas
+     * @param filas
+     * @param rutaArchivo
+     * @return 
+     */
     public Boolean guardarEnArchivo(ArrayList url, ArrayList posicionIcono, int columnas, int filas, String rutaArchivo) {
         try {
 
@@ -128,8 +135,12 @@ public class AdministradorArchivos {
         }
 
     }
-    
-    public ArrayList<Icono> leerArchivo() throws Exception{
+    /**
+     * Lee archivo formato xml
+     * @return
+     * @throws Exception 
+     */
+    public ArrayList<Icono> leerArchivoXml() throws Exception{
         File archivo = new File("iconos.xml");
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
