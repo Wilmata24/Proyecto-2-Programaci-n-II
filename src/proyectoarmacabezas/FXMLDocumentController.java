@@ -64,7 +64,7 @@ public class FXMLDocumentController implements Initializable {
      */
     @FXML
     public void buttonAceptarAccion(ActionEvent event) throws Exception {
-        
+
         try {
         if (Integer.parseInt(textFieldLargo.getText()) <= 0 || Integer.parseInt(textFieldAncho.getText()) <= 0) {
             labelMensaje.setText("Valor incorrecto");
@@ -74,6 +74,7 @@ public class FXMLDocumentController implements Initializable {
             anchorPaneMapa.getChildren().add(gridPaneMapa);
             buttonBorrar.setDisable(false);
             buttonAceptar.setDisable(true);
+            vBoxIconos.setDisable(false);
         }
         }catch (NumberFormatException exception) {
             labelMensaje.setText("Valor incorrecto");
@@ -171,7 +172,7 @@ public class FXMLDocumentController implements Initializable {
      * @throws Exception 
      */
     public void vBoxIconos() throws Exception {
-       
+        vBoxIconos.setDisable(true);
         AdministradorArchivos archivo = new AdministradorArchivos();
 
         Image imagenFacebook = new Image(archivo.leerArchivoXml().get(0).getUrl());
