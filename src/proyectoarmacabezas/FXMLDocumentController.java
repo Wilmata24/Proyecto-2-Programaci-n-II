@@ -95,6 +95,7 @@ public class FXMLDocumentController implements Initializable {
  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         //Iconos de las opciones de la barra de menú
         menuItemGuardar.setGraphic(new ImageView(new Image("/iconos/guardar.png")));
         menuItemAbrir.setGraphic(new ImageView(new Image("/iconos/abrir.png")));
@@ -118,8 +119,9 @@ public class FXMLDocumentController implements Initializable {
      * @param event 
      */
     @FXML
-    private void guardar(ActionEvent event) {   
-       administradorArchivos.guardarEnArchivo(listaUrl, listaPosicionIcono, logica.getCantidadFilas(gridPaneMapa), logica.getCantidadColumnas(gridPaneMapa), "File");
+    private void guardar(ActionEvent event) {
+        
+        administradorArchivos.escribirArchivoJson(listaUrl, listaPosicionIcono, logica.getCantidadFilas(gridPaneMapa), logica.getCantidadColumnas(gridPaneMapa), "File");
     }
     
     /**
@@ -137,7 +139,11 @@ public class FXMLDocumentController implements Initializable {
      */
     @FXML
     private void abrirDocumento(ActionEvent event) {
-        logica.fileChooserAbrirDocumento(menuItemAbrir);
+        long filas = administradorArchivos.getFilasArchivo(administradorArchivos.leerArchivoJson("File"));
+        long columnas = administradorArchivos.getColumnasArchivo(administradorArchivos.leerArchivoJson("File"));
+        gridPaneMapa = logica.mostrarMapa((int) filas, (int) columnas);
+        anchorPaneMapa.getChildren().add(gridPaneMapa);
+        vBoxIconos.setDisable(false);
     }
 
     /**

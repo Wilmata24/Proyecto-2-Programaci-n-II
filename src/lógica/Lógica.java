@@ -74,6 +74,7 @@ public class Lógica {
      */
     String filasColumnas; 
     public String detectaClickMapa(String url, int fila, int columna) {
+  
         int matrizEspejo[][] = new int[fila][columna];
         for (int i = 0 ; i < imageViewMuestraMapa.length ; i++) {
             for (int j = 0 ; j < imageViewMuestraMapa[0].length ; j++) {
@@ -109,7 +110,7 @@ public class Lógica {
                     }
                 });            
             }
-        }        
+        }               
         return filasColumnas;
     }
     

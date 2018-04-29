@@ -12,6 +12,7 @@ import javafx.stage.Stage;
  * @author Wilmer Mata
  * @author Nicole Fonseca
  */
+
 public class ProyectoArmacabezas extends Application {
     
     @Override
@@ -29,7 +30,6 @@ public class ProyectoArmacabezas extends Application {
      */
     public static void main(String[] args) {
         launch(args);
-       
     }
     
 }
