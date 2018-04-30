@@ -1,15 +1,12 @@
-package lógica;
+package logica;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -18,7 +15,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
-import proyectoarmacabezas.FXMLDocumentController;
 
 /**
  *
@@ -26,7 +22,7 @@ import proyectoarmacabezas.FXMLDocumentController;
  * @author Nicole Fonseca
  */
 
-public class Lógica {
+public class Logica {
 
     private GridPane gridPaneMapa;
     ImageView imageViewMuestraMapa[][];
@@ -40,7 +36,7 @@ public class Lógica {
      * @return 
      */
     public GridPane mostrarMapa(int filas, int columnas) {
-
+  
         gridPaneMapa = new GridPane();
         //Matriz de imágenes con tamaño definido por el usuario
         Image muestraMapa[][] = new Image[filas][columnas];
@@ -64,7 +60,7 @@ public class Lógica {
         return gridPaneMapa;
     }
     
-    //String filasColumnas = "";
+    public static ArrayList<Object> listaPosicionIcono = new ArrayList<>(); 
     /**
      * 
      * @param url recibe la dirección de la imagen seleccionada previamente
@@ -72,19 +68,18 @@ public class Lógica {
      * @param columna cantidad de columnas del mapa
      * @return 
      */
-    String filasColumnas; 
-    public String detectaClickMapa(String url, int fila, int columna) {
+    
+    public ArrayList detectaClickMapa(String url, int fila, int columna) {
   
         int matrizEspejo[][] = new int[fila][columna];
         for (int i = 0 ; i < imageViewMuestraMapa.length ; i++) {
             for (int j = 0 ; j < imageViewMuestraMapa[0].length ; j++) {
                 int auxI = i;
-                int auxJ = j;
-                
+                int auxJ = j;               
                 imageViewMuestraMapa[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
-                    public void handle(MouseEvent event) {
-                        filasColumnas = "[" + auxI + "]" + "," + "[" + auxJ + "]";
+                    public void handle(MouseEvent event) { 
+                        
                         int llenaEspejo = 1;
                         for(int filaEspejo= 0 ; filaEspejo < matrizEspejo.length ; filaEspejo++) {
                             for(int columnaEspejo = 0 ; columnaEspejo < matrizEspejo[0].length ; columnaEspejo++){                               
@@ -98,91 +93,33 @@ public class Lógica {
                                         imagen[auxI][auxJ] = new Image(url);
                                         imageView[auxI][auxJ] = new ImageView();
                                         imageView[auxI][auxJ].setImage(imagen[filaImageView][columnaImageView]);
+                                        
                                         matrizEspejo[auxI][auxJ] = llenaEspejo;
                                         GridPane.setConstraints(imageView[auxI][auxJ], columnaGridPane, filaGridPane);
                                         columnaGridPane++;
-                                        gridPaneMapa.getChildren().add(imageView[auxI][auxJ]);      
+                                        gridPaneMapa.getChildren().add(imageView[auxI][auxJ]);   
+                               
                                     }
-                                    filaGridPane++;      
+                                    filaGridPane++; 
+                                    
                                 } 
                             }
                         }
+                        String posicion = "[" + auxI + "]" + "," + "[" + auxJ + "]";
+                        listaPosicionIcono.add(posicion);
                     }
                 });            
             }
         }               
-        return filasColumnas;
+        return listaPosicionIcono;
     }
-    
-    /**
-     *
-     * @param menuItemGuardar
-     */
-    public void fileChooserGuardar(MenuItem menuItemGuardar) {
-        FileChooser chooser = new FileChooser();
 
-        chooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter(".json", "*.json"),
-                new FileChooser.ExtensionFilter("All Files", "*.*")
-        );
-
-        File file = chooser.showSaveDialog(menuItemGuardar.getParentPopup().getScene().getWindow());
-        if (file != null) {
-            guardarDocumento("", file);
-        }
-        
-    }
-    
-    /**
-     * 
-     * @param contenido
-     * @param archivo 
-     */
-    public void guardarDocumento(String contenido, File archivo) {
-        try {
-            FileWriter fileWriter = null;
-
-            fileWriter = new FileWriter(archivo);
-            fileWriter.write(contenido);
-            fileWriter.close();
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    private File archivo;
-    private static boolean DEBUG = false;
-    /**
-     * 
-     * @param menuItemAbrir 
-     */
-    public void fileChooserAbrirDocumento(MenuItem menuItemAbrir) {
-        FileChooser chooser = new FileChooser();
-        chooser.setTitle("Open File");
-        chooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter(".*xml", "*.xml", "*.json"),
-                new FileChooser.ExtensionFilter("All Files", "*.*")
-        );
-
-        if (archivo != null) {
-            File existDirectory = archivo.getParentFile();
-            chooser.setInitialDirectory(existDirectory);
-        }
-
-        File archivo = chooser.showOpenDialog(menuItemAbrir.getParentPopup().getScene().getWindow());
-
-        String nombreArchivo = archivo.getPath();
-
-//        if (DEBUG) {
-//            princpalLogTextArea.appendText("Opening " + nombreArchivo + System.lineSeparator());
-//        }
-    }
-    
     /**
      * Abre un FileChooser para exportar el contenido de un GridPane a formato .png
      * @param gridPane 
      */
    public void fileChooserExportar(GridPane gridPane) {
+       
         WritableImage image = gridPane.snapshot(new SnapshotParameters(), null);
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Image");
@@ -206,10 +143,7 @@ public class Lógica {
     }
    
     private Stage dialogStage;
-    /**
-     * Ventana para mostrar el FileChooser
-     * @param dialogStage 
-     */
+
     public void start(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
@@ -221,6 +155,7 @@ public class Lógica {
      * @return cantidad filas
      */
     public int getCantidadFilas(GridPane gridPane) {
+        
         int numFilas = gridPane.getRowConstraints().size();
         for (int i = 0; i < gridPane.getChildren().size(); i++) {
             Node node = gridPane.getChildren().get(i);
@@ -241,6 +176,7 @@ public class Lógica {
      * @return cantidad de columnas
      */
     public int getCantidadColumnas(GridPane gridPane) {
+        
         int numColumnas = gridPane.getColumnConstraints().size();
         for (int i = 0; i < gridPane.getChildren().size(); i++) {
             Node node = gridPane.getChildren().get(i);

@@ -1,31 +1,36 @@
 
 package archivos;
 
-import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
-
 import dominio.Icono;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import logica.Logica;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import sun.plugin.javascript.navig.Anchor;
 
 /**
  *@author Wilmer Mata
  * @author Nicole Fonseca
  */
+
 public class AdministradorArchivos {
    
     /**
@@ -34,75 +39,91 @@ public class AdministradorArchivos {
      * @param posicionIcono
      * @param columnas
      * @param filas
-     * @param rutaArchivo 
+     * @return 
      */
-    public void escribirArchivoJson(ArrayList url, ArrayList posicionIcono, int columnas, int filas, String rutaArchivo) {
-        
+    public Boolean escribirArchivoJson(ArrayList url, ArrayList posicionIcono, int columnas, int filas) {
+       
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("url", url);
         jsonObject.put("posicionIcono", posicionIcono);
         jsonObject.put("columnas", columnas);
         jsonObject.put("filas", filas);
 
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Guardar documento");
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(".json", "*.json"));
+        File file = fileChooser.showSaveDialog(this.dialogStage);
+
         try {
-            FileWriter archivo = new FileWriter(rutaArchivo);
+            FileWriter archivo = new FileWriter(file);
             archivo.write(jsonObject.toJSONString());
             archivo.flush();
             archivo.close();
-
+            return true;
+        } catch (FileNotFoundException exception) {
+            exception.printStackTrace();
+            return false;
         } catch (IOException exception) {
-            System.out.println("IOException");
+            exception.printStackTrace();
+            return false;
         }
+    }
+    
+        
+    private Stage dialogStage;
+  
+    public void start(Stage dialogStage) {
+        this.dialogStage = dialogStage;
     }
     
     /**
      *  
-     * @param rutaArchivo
-     * @return
+     * @param gridPaneMapa
+     * @param anchorPaneMapa
+     * 
      */
-    public JSONObject leerArchivoJson(String rutaArchivo) {
-        
+    public void leerArchivoJson(GridPane gridPaneMapa, AnchorPane anchorPaneMapa) {
+
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = new JSONObject();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Abrir documento");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showOpenDialog(this.dialogStage);
+        
         try {
-            Object object = jsonParser.parse(new FileReader(rutaArchivo));
-
+            Object object = jsonParser.parse(new FileReader(file));
             jsonObject = (JSONObject) object;
-
             ArrayList url = (ArrayList) jsonObject.get("url");
             ArrayList posicionIcono = (ArrayList) jsonObject.get("posicionIcono");
             long filas = (long) jsonObject.get("filas");
             long columnas = (long) jsonObject.get("columnas");
-
-        } catch (Exception ex) {
-            System.err.println("Error: " + ex.toString());
-        } 
-        return jsonObject;
-    }
-    
-    public ArrayList getIconosArchivo(JSONObject jsonObject) {
-
-        JSONArray url = (JSONArray) jsonObject.get("url");
+        } catch (FileNotFoundException exception) {
+            exception.printStackTrace();
+        } catch (IOException | ParseException exception) {
+            exception.printStackTrace();
+        }
+        
+        Logica logica = new Logica();
+        long filas = (long) jsonObject.get("filas");
+        long columnas = (long) jsonObject.get("columnas");
+        
+        JSONArray url = (JSONArray) jsonObject.get("url");      
         Iterator<String> iterator = url.iterator();
         while (iterator.hasNext()) {
             System.out.println(iterator.next());
         }
-        return url;
-    }
-    
-    public long getFilasArchivo(JSONObject jsonObject) {
-        long filas = (long) jsonObject.get("filas");
-        return filas;
-    }
-    
-    public long getColumnasArchivo(JSONObject jsonObject) {
-        long columnas = (long) jsonObject.get("columnas");
-        return columnas;
-    }
-    
-    public String getPosicionIconosArchivo(JSONObject jsonObject) {
-        String posicionIconos = (String) jsonObject.get("posicionIconos");
-        return posicionIconos;
+        
+        JSONArray posicionIcono = (JSONArray) jsonObject.get("posicionIcono");
+        Iterator<String> iteratorPosicion = posicionIcono.iterator();
+        while (iteratorPosicion.hasNext()) {
+            System.out.println(iteratorPosicion.next());
+        }
+        
+        gridPaneMapa = logica.mostrarMapa((int) filas, (int) columnas);
+        anchorPaneMapa.getChildren().add(gridPaneMapa);
+ 
     }
     
     /**
