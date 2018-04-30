@@ -98,7 +98,6 @@ public class Logica {
                                         GridPane.setConstraints(imageView[auxI][auxJ], columnaGridPane, filaGridPane);
                                         columnaGridPane++;
                                         gridPaneMapa.getChildren().add(imageView[auxI][auxJ]);   
-                               
                                     }
                                     filaGridPane++; 
                                     

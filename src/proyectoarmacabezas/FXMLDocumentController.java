@@ -134,25 +134,7 @@ public class FXMLDocumentController implements Initializable {
     private void abrirDocumento(ActionEvent event) throws Exception {
         menuItemExportar.setDisable(false);
         menuItemGuardar.setDisable(false);
-        administradorArchivos.leerArchivoJson(gridPaneMapa, anchorPaneMapa);
-        
-//         ImageView imageView[][] = new ImageView[(int) filas][(int) columnas];
-//         Image image[][] = new Image[(int)filas][(int)columnas];
-//        for (int i = 0; i < iconosArchivo.size(); i++) {
-//            for (int j = 0; j < posicionIconos.size(); j++) {
-//                String posicionFila = posicionIconos.get(j).toString().substring(1, 2);
-//                String posicionColumna = posicionIconos.get(j).toString().substring(5, 6);
-//
-//            if (iconosArchivo.get(i).equals(administradorArchivos.leerArchivoXml().get(0).getUrl())) {
-//                image[Integer.parseInt(posicionFila)][0] = new Image(administradorArchivos.leerArchivoXml().get(0).getUrl());
-//                imageView[j][j].setImage(image[j][j]);
-//                GridPane.setConstraints(imageView[j][j], Integer.parseInt(posicionColumna), Integer.parseInt(posicionFila));
-//                gridPaneMapa.getChildren().add(imageView[j][j]);
-//                break;
-//            }
-//            }
-//        }
-        
+        administradorArchivos.leerArchivoJson(gridPaneMapa, anchorPaneMapa);    
         
     }
 
