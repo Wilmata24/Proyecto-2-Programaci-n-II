@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="433.0" prefWidth="607.0" style="-fx-background-color: #FF9999;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoarmacabezas.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="308.0" prefWidth="643.0" style="-fx-background-color: #CC6666;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoarmacabezas.FXMLDocumentController">
    <children>
-      <MenuBar fx:id="menuBar" layoutY="1.0" prefHeight="43.0" prefWidth="697.0">
+      <MenuBar fx:id="menuBar" layoutY="1.0" prefHeight="43.0" prefWidth="705.0">
         <menus>
           <Menu mnemonicParsing="false" text="Archivo">
             <items>
@@ -30,7 +30,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <AnchorPane layoutX="153.0" layoutY="43.0" prefHeight="80.0" prefWidth="545.0" style="-fx-background-color: #CC6666;">
+      <AnchorPane layoutX="153.0" layoutY="43.0" prefHeight="80.0" prefWidth="552.0" style="-fx-background-color: #CC6666;">
          <children>
             <TextField fx:id="textFieldLargo" layoutX="239.0" layoutY="14.0" prefHeight="25.0" prefWidth="68.0" />
             <TextField fx:id="textFieldAncho" layoutX="239.0" layoutY="41.0" prefHeight="25.0" prefWidth="68.0" />
@@ -41,11 +41,11 @@
             <Button fx:id="buttonBorrar" layoutX="413.0" layoutY="29.0" mnemonicParsing="false" onAction="#buttonBorrarAccion" text="Borrar" />
          </children>
       </AnchorPane>
-      <ScrollPane layoutX="-6.0" layoutY="43.0" prefHeight="439.0" prefWidth="159.0">
+      <ScrollPane layoutX="-6.0" layoutY="43.0" prefHeight="430.0" prefWidth="160.0">
          <content>
-            <AnchorPane prefHeight="456.0" prefWidth="162.0" style="-fx-background-color: #FF6666;">
+            <AnchorPane prefHeight="439.0" prefWidth="125.0" style="-fx-background-color: #CC6666;">
                <children>
-                  <VBox fx:id="vBoxIconos" prefHeight="425.0" prefWidth="143.0" spacing="10.0">
+                  <VBox fx:id="vBoxIconos" prefHeight="439.0" prefWidth="143.0" spacing="10.0">
                      <padding>
                         <Insets bottom="5.0" left="40.0" right="10.0" top="5.0" />
                      </padding></VBox>
@@ -53,9 +53,9 @@
             </AnchorPane>
          </content>
       </ScrollPane>
-      <ScrollPane layoutX="153.0" layoutY="124.0" prefHeight="360.0" prefWidth="545.0">
+      <ScrollPane layoutX="153.0" layoutY="124.0" prefHeight="348.0" prefWidth="552.0">
          <content>
-            <AnchorPane fx:id="anchorPaneMapa" prefHeight="362.0" prefWidth="543.0" style="-fx-background-color: #CC9999;" />
+            <AnchorPane fx:id="anchorPaneMapa" prefHeight="352.0" prefWidth="542.0" style="-fx-background-color: #CC9999;" />
          </content>
       </ScrollPane>
    </children>

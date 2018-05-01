@@ -132,6 +132,10 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void abrirDocumento(ActionEvent event) throws Exception {
+        vBoxIconos.setDisable(false);
+        textFieldAncho.setDisable(true);
+        textFieldLargo.setDisable(true);
+        buttonAceptar.setDisable(true);
         menuItemExportar.setDisable(false);
         menuItemGuardar.setDisable(false);
         administradorArchivos.leerArchivoJson(gridPaneMapa, anchorPaneMapa);    

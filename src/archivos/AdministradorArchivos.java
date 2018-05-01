@@ -84,6 +84,8 @@ public class AdministradorArchivos {
      * @param anchorPaneMapa
      * 
      */
+    int i = 0;
+    int j = 0;
     public void leerArchivoJson(GridPane gridPaneMapa, AnchorPane anchorPaneMapa) {
 
         JSONParser jsonParser = new JSONParser();
@@ -109,48 +111,49 @@ public class AdministradorArchivos {
         Logica logica = new Logica();
         long filas = (long) jsonObject.get("filas");
         long columnas = (long) jsonObject.get("columnas");
-        gridPaneMapa = logica.mostrarMapa((int) filas, (int) columnas);
+        gridPaneMapa = logica.mostrarMapa((int) columnas, (int) filas);
         anchorPaneMapa.getChildren().add(gridPaneMapa);
     
         JSONArray url = (JSONArray) jsonObject.get("url");      
         Iterator<String> iterator = url.iterator();
-        while (iterator.hasNext()) {
-            System.out.println(iterator.next());
-        }
-        
+//        while (iterator.hasNext()) {
+//            System.out.println(iterator.next());
+//        }
+//        
         JSONArray posicionIcono = (JSONArray) jsonObject.get("posicionIcono");
         Iterator<String> iteratorPosicion = posicionIcono.iterator();
-        while (iteratorPosicion.hasNext()) {
-            System.out.println(iteratorPosicion.next());
-        }
+//        while (iteratorPosicion.hasNext()) {
+//            System.out.println(iteratorPosicion.next());
+//        }
         
         ImageView imageView[][] = new ImageView[(int) filas][(int)columnas];
         Image image[][] = new Image[(int) filas][(int) columnas];
-     
-        int i = 0;
-        int j = 0;
-        while(i < posicionIcono.size()) {
-            String iconosArchivo = url.get(i).toString();
-            String fila = posicionIcono.get(j).toString().substring(1, 2);
-            String columna = posicionIcono.get(j).toString().substring(5, 6);
-            int columnaGridPane = 0;
-            int filaGridPane = 0;
-            for (int filaImageView = 0 ; filaImageView < imageView.length ; filaImageView++) {
-                    columnaGridPane = 0;
-                    for (int columnaImageView = 0; columnaImageView < imageView[0].length; columnaImageView++) {
-                        image[i][j] = new Image(iconosArchivo);
-                        imageView[i][j] = new ImageView();
-                        imageView[i][j].setImage(image[filaImageView][columnaImageView]);
 
-                        GridPane.setConstraints(imageView[i][j], Integer.parseInt(columna), Integer.parseInt(fila));
-                        columnaGridPane++;
-                    gridPaneMapa.getChildren().add(imageView[i][j]);
-                }
-                filaGridPane++;
-            } 
-            i++;
-            j++;
-        }
+        
+//        logica.detectaClickMapa(iconosArchivo, Integer.parseInt(fila), Integer.parseInt(columna));
+       
+       do{
+        String iconosArchivo = url.get(i).toString();
+        String fila = posicionIcono.get(j).toString().substring(1, 2);
+        String columna = posicionIcono.get(j).toString().substring(5, 6);
+                        image[Integer.parseInt(fila)][Integer.parseInt(columna)] = new Image(iconosArchivo);
+                        imageView[Integer.parseInt(fila)][Integer.parseInt(columna)] = new ImageView();
+                          imageView[Integer.parseInt(fila)][Integer.parseInt(columna)].setImage(image[Integer.parseInt(fila)][Integer.parseInt(columna)]);
+
+                        GridPane.setConstraints(imageView[Integer.parseInt(fila)][Integer.parseInt(columna)], Integer.parseInt(columna), Integer.parseInt(fila));
+
+                    gridPaneMapa.getChildren().add(imageView[Integer.parseInt(fila)][Integer.parseInt(columna)]);
+                  i++;
+                  j++; 
+             System.out.println(fila);
+             System.out.println(columna);
+             
+            System.out.println(iconosArchivo);
+
+
+      }   while (i < posicionIcono.size());
+       
+      
     }
     
     /**

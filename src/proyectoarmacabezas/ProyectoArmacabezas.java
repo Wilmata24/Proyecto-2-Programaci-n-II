@@ -24,6 +24,7 @@ public class ProyectoArmacabezas extends Application {
         stage.setScene(scene);
         stage.show();
         stage.setTitle("Armacabezas");
+        stage.setResizable(false);
     }
 
     /**
