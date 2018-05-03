@@ -47,7 +47,7 @@
             <Font name="Times New Roman" size="13.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="85.0" layoutY="241.0" prefHeight="17.0" prefWidth="362.0" text="presionar exportar para guardar el documento en formato .jpg o .png" textAlignment="JUSTIFY">
+      <Label alignment="CENTER" layoutX="85.0" layoutY="241.0" prefHeight="17.0" prefWidth="362.0" text="presionar exportar para guardar el documento en formato .png" textAlignment="JUSTIFY">
          <font>
             <Font name="Times New Roman" size="13.0" />
          </font>
