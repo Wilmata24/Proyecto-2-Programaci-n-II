@@ -8,7 +8,6 @@ import dominio.Icono;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -26,7 +25,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import sun.plugin.javascript.navig.Anchor;
 
 /**
  *@author Wilmer Mata
@@ -86,7 +84,7 @@ public class AdministradorArchivos {
      */
     int i = 0;
     int j = 0;
-    public void leerArchivoJson(GridPane gridPaneMapa, AnchorPane anchorPaneMapa) {
+    public JSONObject leerArchivoJson(GridPane gridPaneMapa, AnchorPane anchorPaneMapa) {
 
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = new JSONObject();
@@ -108,83 +106,72 @@ public class AdministradorArchivos {
         } catch (IOException | ParseException exception) {
             exception.printStackTrace();
         }
+        
         Logica logica = new Logica();
         long filas = (long) jsonObject.get("filas");
         long columnas = (long) jsonObject.get("columnas");
-        gridPaneMapa = logica.mostrarMapa((int) columnas, (int) filas);
+        gridPaneMapa = logica.mostrarMapa((int) filas, (int) columnas);
         anchorPaneMapa.getChildren().add(gridPaneMapa);
     
         JSONArray url = (JSONArray) jsonObject.get("url");      
-        Iterator<String> iterator = url.iterator();
-//        while (iterator.hasNext()) {
-//            System.out.println(iterator.next());
-//        }
-//        
         JSONArray posicionIcono = (JSONArray) jsonObject.get("posicionIcono");
-        Iterator<String> iteratorPosicion = posicionIcono.iterator();
-//        while (iteratorPosicion.hasNext()) {
-//            System.out.println(iteratorPosicion.next());
-//        }
-        
+  
         ImageView imageView[][] = new ImageView[(int) filas][(int)columnas];
         Image image[][] = new Image[(int) filas][(int) columnas];
-
-        
-//        logica.detectaClickMapa(iconosArchivo, Integer.parseInt(fila), Integer.parseInt(columna));
        
-       do{
-        String iconosArchivo = url.get(i).toString();
-        String fila = posicionIcono.get(j).toString().substring(1, 2);
-        String columna = posicionIcono.get(j).toString().substring(5, 6);
-                        image[Integer.parseInt(fila)][Integer.parseInt(columna)] = new Image(iconosArchivo);
-                        imageView[Integer.parseInt(fila)][Integer.parseInt(columna)] = new ImageView();
-                          imageView[Integer.parseInt(fila)][Integer.parseInt(columna)].setImage(image[Integer.parseInt(fila)][Integer.parseInt(columna)]);
+        do {
+            String iconosArchivo = url.get(i).toString();
+            String fila = posicionIcono.get(j).toString().substring(1, 2);
+            String columna = posicionIcono.get(j).toString().substring(5, 6);
+            image[Integer.parseInt(fila)][Integer.parseInt(columna)] = new Image(iconosArchivo);
+            imageView[Integer.parseInt(fila)][Integer.parseInt(columna)] = new ImageView();
+            imageView[Integer.parseInt(fila)][Integer.parseInt(columna)].setImage(image[Integer.parseInt(fila)][Integer.parseInt(columna)]);
 
-                        GridPane.setConstraints(imageView[Integer.parseInt(fila)][Integer.parseInt(columna)], Integer.parseInt(columna), Integer.parseInt(fila));
-
-                    gridPaneMapa.getChildren().add(imageView[Integer.parseInt(fila)][Integer.parseInt(columna)]);
-                  i++;
-                  j++; 
-             System.out.println(fila);
-             System.out.println(columna);
-             
-            System.out.println(iconosArchivo);
+            GridPane.setConstraints(imageView[Integer.parseInt(fila)][Integer.parseInt(columna)], Integer.parseInt(columna), Integer.parseInt(fila));
+            gridPaneMapa.getChildren().add(imageView[Integer.parseInt(fila)][Integer.parseInt(columna)]);
+            i++;
+            j++;
 
 
-      }   while (i < posicionIcono.size());
-       
-      
+        } while (i < posicionIcono.size());
+        return jsonObject;
     }
     
     /**
      * Lee archivo formato xml
+     * @param nombreArchivo
      * @return
      * @throws Exception 
      */
-    public ArrayList<Icono> leerArchivoXml() throws Exception {
+    public ArrayList<Icono> leerArchivoXml(String nombreArchivo) throws Exception {
+        ArrayList<Icono> lista = null;
+        try {
+            File archivo = new File(nombreArchivo);
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document document = documentBuilder.parse(archivo);
+            document.getDocumentElement().normalize();
 
-        File archivo = new File("iconos.xml");
-        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-        Document document = documentBuilder.parse(archivo);
-        document.getDocumentElement().normalize();
+            lista = new ArrayList();
+            NodeList nodeList = document.getElementsByTagName("icono");
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Node node = nodeList.item(i);
 
-        ArrayList<Icono> lista = new ArrayList();
-        NodeList nodeList = document.getElementsByTagName("icono");
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            Node node = nodeList.item(i);
-
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                Element element = (Element) node;
-                Icono icono = new Icono();
-                icono.setTamaño(Integer.parseInt(element.getElementsByTagName("tamano").item(0).getTextContent().toString()));
-                icono.setNombre((element.getElementsByTagName("nombre").item(0).getTextContent()).toString());
-                icono.setUrl((element.getElementsByTagName("url").item(0).getTextContent()).toString());
-                lista.add(icono);
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    Element element = (Element) node;
+                    Icono icono = new Icono();
+                    icono.setTamaño(Integer.parseInt(element.getElementsByTagName("tamano").item(0).getTextContent().toString()));
+                    icono.setNombre((element.getElementsByTagName("nombre").item(0).getTextContent()).toString());
+                    icono.setUrl((element.getElementsByTagName("url").item(0).getTextContent()).toString());
+                    lista.add(icono);
+                }
             }
+        } catch (FileNotFoundException exception) {
+            exception.printStackTrace();
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
         return lista;
-
     }
 
 }

@@ -33,7 +33,7 @@ public class Logica {
      * llenar el GridPane con las imágenes
      * @param filas
      * @param columnas
-     * @return 
+     * @return GridPane que muestra el mapa
      */
     public GridPane mostrarMapa(int filas, int columnas) {
   
@@ -66,7 +66,7 @@ public class Logica {
      * @param url recibe la dirección de la imagen seleccionada previamente
      * @param fila cantidad de filas del mapa
      * @param columna cantidad de columnas del mapa
-     * @return 
+     * @return ArrayList que contiene las posiciones de los iconos agregados al mapa
      */
     
     public ArrayList detectaClickMapa(String url, int fila, int columna) {
@@ -193,7 +193,8 @@ public class Logica {
      * Determina si los valores que entran como parámetro son números
      * @param cadena1
      * @param cadena2
-     * @return 
+     * @return true si la los parámetros a evaluar son números, false 
+     * en caso contrario
      */
     public static boolean isNumeric(String cadena1, String cadena2) {
 

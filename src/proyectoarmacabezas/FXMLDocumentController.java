@@ -31,6 +31,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import logica.Logica;
 import static logica.Logica.listaPosicionIcono;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -57,9 +58,9 @@ public class FXMLDocumentController implements Initializable {
     @FXML private Label labelMensaje;
     private GridPane gridPaneMapa;
     ArrayList<Object> listaUrl = new ArrayList<>();
-
+    
     /**
-     * 
+     * Muestra el mapa con el tamaño ingresado por el usuario
      * @param event
      * @throws Exception 
      */
@@ -83,6 +84,7 @@ public class FXMLDocumentController implements Initializable {
         } 
         menuItemExportar.setDisable(false);
         menuItemGuardar.setDisable(false);
+        menuItemAbrir.setDisable(true);
     }
 
     /**
@@ -94,6 +96,8 @@ public class FXMLDocumentController implements Initializable {
     public void buttonBorrarAccion(ActionEvent event) throws Exception {
         gridPaneMapa = logica.mostrarMapa(Integer.parseInt(textFieldLargo.getText()), Integer.parseInt(textFieldAncho.getText()));
         anchorPaneMapa.getChildren().add(gridPaneMapa);
+        listaUrl.removeAll(listaUrl);
+        listaPosicionIcono.removeAll(listaPosicionIcono);
     }
  
     @Override
@@ -122,28 +126,30 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void guardar(ActionEvent event) {
 
-        administradorArchivos.escribirArchivoJson(listaUrl,listaPosicionIcono, logica.getCantidadFilas(gridPaneMapa), logica.getCantidadColumnas(gridPaneMapa));
+        administradorArchivos.escribirArchivoJson(listaUrl,listaPosicionIcono, logica.getCantidadColumnas(gridPaneMapa), logica.getCantidadFilas(gridPaneMapa));
     }
  
     @FXML
     private void salir(ActionEvent event) {
         System.exit(0);
     }
-
+    JSONObject jsonObject;
     @FXML
     private void abrirDocumento(ActionEvent event) throws Exception {
+        
         vBoxIconos.setDisable(false);
         textFieldAncho.setDisable(true);
         textFieldLargo.setDisable(true);
         buttonAceptar.setDisable(true);
         menuItemExportar.setDisable(false);
         menuItemGuardar.setDisable(false);
-        administradorArchivos.leerArchivoJson(gridPaneMapa, anchorPaneMapa);    
-        
+        jsonObject = administradorArchivos.leerArchivoJson(gridPaneMapa, anchorPaneMapa);  
+      
     }
 
     @FXML
-    private void exportar(ActionEvent event) {
+    private void exportar(ActionEvent event) throws Exception {
+      
         logica.fileChooserExportar(gridPaneMapa);
     }
   
@@ -167,53 +173,53 @@ public class FXMLDocumentController implements Initializable {
     public void vBoxIconos() throws Exception {
         vBoxIconos.setDisable(true);
         AdministradorArchivos archivo = new AdministradorArchivos();
-
-        Image imagenFacebook = new Image(archivo.leerArchivoXml().get(0).getUrl());
+        
+        Image imagenFacebook = new Image(archivo.leerArchivoXml("iconos.xml").get(0).getUrl());
         ImageView imageViewFaceboook = new ImageView();
         imageViewFaceboook.setImage(imagenFacebook);
         imageViewFaceboook.setCursor(Cursor.HAND);
-        
-        Image imagenInstagram = new Image(archivo.leerArchivoXml().get(1).getUrl());
+
+        Image imagenInstagram = new Image(archivo.leerArchivoXml("iconos.xml").get(1).getUrl());
         ImageView imageViewInstagram = new ImageView();
         imageViewInstagram.setImage(imagenInstagram);
         imageViewInstagram.setCursor(Cursor.HAND);
         
-        Image imagenSkype = new Image(archivo.leerArchivoXml().get(2).getUrl());
+        Image imagenSkype = new Image(archivo.leerArchivoXml("iconos.xml").get(2).getUrl());
         ImageView imageViewSkype = new ImageView();
         imageViewSkype.setImage(imagenSkype);
         imageViewSkype.setCursor(Cursor.HAND);
         
-        Image imagenSnapchat = new Image(archivo.leerArchivoXml().get(3).getUrl());
+        Image imagenSnapchat = new Image(archivo.leerArchivoXml("iconos.xml").get(3).getUrl());
         ImageView imageViewSnapchat = new ImageView();
         imageViewSnapchat.setImage(imagenSnapchat);
         imageViewSnapchat.setCursor(Cursor.HAND);
         
-        Image imagenSoundcloud = new Image(archivo.leerArchivoXml().get(4).getUrl());
+        Image imagenSoundcloud = new Image(archivo.leerArchivoXml("iconos.xml").get(4).getUrl());
         ImageView imageViewSoundcloud = new ImageView();
         imageViewSoundcloud.setImage(imagenSoundcloud);
         imageViewSoundcloud.setCursor(Cursor.HAND);
         
-        Image imagenTelegram = new Image(archivo.leerArchivoXml().get(5).getUrl());
+        Image imagenTelegram = new Image(archivo.leerArchivoXml("iconos.xml").get(5).getUrl());
         ImageView imageViewTelegram = new ImageView();
         imageViewTelegram.setImage(imagenTelegram);
         imageViewTelegram.setCursor(Cursor.HAND);
         
-        Image imagenTumblr = new Image(archivo.leerArchivoXml().get(6).getUrl());
+        Image imagenTumblr = new Image(archivo.leerArchivoXml("iconos.xml").get(6).getUrl());
         ImageView imageViewTumblr = new ImageView();
         imageViewTumblr.setImage(imagenTumblr);
         imageViewTumblr.setCursor(Cursor.HAND);
         
-        Image imagenTwitter = new Image(archivo.leerArchivoXml().get(7).getUrl());
+        Image imagenTwitter = new Image(archivo.leerArchivoXml("iconos.xml").get(7).getUrl());
         ImageView imageViewTwitter = new ImageView();
         imageViewTwitter.setImage(imagenTwitter);
         imageViewTwitter.setCursor(Cursor.HAND);
         
-        Image imagenWhatsapp = new Image(archivo.leerArchivoXml().get(8).getUrl());
+        Image imagenWhatsapp = new Image(archivo.leerArchivoXml("iconos.xml").get(8).getUrl());
         ImageView imageViewWhatsapp = new ImageView();
         imageViewWhatsapp.setImage(imagenWhatsapp);
         imageViewWhatsapp.setCursor(Cursor.HAND);
         
-        Image imagenYoutube = new Image(archivo.leerArchivoXml().get(9).getUrl());
+        Image imagenYoutube = new Image(archivo.leerArchivoXml("iconos.xml").get(9).getUrl());
         ImageView imageViewYoutube = new ImageView();
         imageViewYoutube.setImage(imagenYoutube);
         imageViewYoutube.setCursor(Cursor.HAND);
@@ -221,15 +227,16 @@ public class FXMLDocumentController implements Initializable {
             imageViewFaceboook.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    int largo = (int) Integer.parseInt(textFieldLargo.getText());
-                    int ancho = (int) Integer.parseInt(textFieldAncho.getText());
                     
+                    int largo = (int) Integer.parseInt(textFieldLargo.getText());
+                    int ancho = (int) Integer.parseInt(textFieldAncho.getText());                  
                     if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
                          logica.detectaClickMapa("iconos/facebook.png", largo, ancho);
                          listaUrl.add("iconos/facebook.png");
                     }
                 }             
             });
+            
             imageViewInstagram.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
