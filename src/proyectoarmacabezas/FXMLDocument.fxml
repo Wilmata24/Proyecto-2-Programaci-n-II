@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="308.0" prefWidth="643.0" style="-fx-background-color: #CC6666;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoarmacabezas.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="308.0" prefWidth="643.0" style="-fx-background-color: #CC6666;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyectoarmacabezas.FXMLDocumentController">
    <children>
       <MenuBar fx:id="menuBar" layoutY="1.0" prefHeight="43.0" prefWidth="705.0">
         <menus>
@@ -58,7 +58,10 @@
                <font>
                   <Font name="Times New Roman" size="13.0" />
                </font></Button>
-            <Label fx:id="labelClickMensaje" layoutX="381.0" layoutY="33.0" prefHeight="17.0" prefWidth="160.0" />
+            <Label fx:id="labelClickMensaje" layoutX="381.0" layoutY="33.0" prefHeight="17.0" prefWidth="160.0">
+               <font>
+                  <Font name="Times New Roman" size="12.0" />
+               </font></Label>
          </children>
       </AnchorPane>
       <ScrollPane layoutX="-6.0" layoutY="43.0" prefHeight="430.0" prefWidth="160.0">
