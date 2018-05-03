@@ -41,6 +41,8 @@ public class AdministradorArchivos {
      * @param filas
      * @return 
      */
+    
+    
     public Boolean escribirArchivoJson(ArrayList url, ArrayList posicionIcono, int columnas, int filas) {
        
         JSONObject jsonObject = new JSONObject();
@@ -69,7 +71,20 @@ public class AdministradorArchivos {
         }
     }
     
+    public FileChooser fileChooser() {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Abrir documento");
+    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json");
+    fileChooser.getExtensionFilters().add(extFilter);
+
+        return fileChooser;
         
+    } 
+    
+//    public long numeroFilas(){
+//        
+//    }
+    
     private Stage dialogStage;
   
     public void start(Stage dialogStage) {
@@ -84,15 +99,10 @@ public class AdministradorArchivos {
      */
     int i = 0;
     int j = 0;
-    public JSONObject leerArchivoJson(GridPane gridPaneMapa, AnchorPane anchorPaneMapa) {
+    public JSONObject leerArchivoJson(File file) {
 
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = new JSONObject();
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Abrir documento");
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json");
-        fileChooser.getExtensionFilters().add(extFilter);
-        File file = fileChooser.showOpenDialog(this.dialogStage);
         
         try {
             Object object = jsonParser.parse(new FileReader(file));
@@ -107,14 +117,18 @@ public class AdministradorArchivos {
             exception.printStackTrace();
         }
         
-        Logica logica = new Logica();
-        long filas = (long) jsonObject.get("filas");
-        long columnas = (long) jsonObject.get("columnas");
-        gridPaneMapa = logica.mostrarMapa((int) filas, (int) columnas);
-        anchorPaneMapa.getChildren().add(gridPaneMapa);
+       
+        return jsonObject;
+    }
     
-        JSONArray url = (JSONArray) jsonObject.get("url");      
-        JSONArray posicionIcono = (JSONArray) jsonObject.get("posicionIcono");
+    public void retornaGridPane (GridPane gridPaneMapa, File file ){
+        Logica logica = new Logica();
+        long filas = (long) leerArchivoJson(file).get("filas");
+        long columnas = (long) leerArchivoJson(file).get("columnas");
+//        anchorPaneMapa.getChildren().add(gridPaneMapa);
+    
+        JSONArray url = (JSONArray) leerArchivoJson(file).get("url");      
+        JSONArray posicionIcono = (JSONArray) leerArchivoJson(file).get("posicionIcono");
   
         ImageView imageView[][] = new ImageView[(int) filas][(int)columnas];
         Image image[][] = new Image[(int) filas][(int) columnas];
@@ -134,9 +148,9 @@ public class AdministradorArchivos {
 
 
         } while (i < posicionIcono.size());
-        return jsonObject;
-    }
-    
+        
+//        return gridPaneMapa;
+     }
     /**
      * Lee archivo formato xml
      * @param nombreArchivo
