@@ -4,6 +4,7 @@ import archivos.AdministradorArchivos;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.FileSystemNotFoundException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -145,23 +146,23 @@ public class FXMLDocumentController implements Initializable {
     }
     
     JSONObject jsonObject;
+
     @FXML
     private void abrirDocumento(ActionEvent event) throws Exception {
-       FileChooser fileChooser = administradorArchivos.fileChooser();
-       File file =  fileChooser.showOpenDialog(this.dialogStage);
+        FileChooser fileChooser = administradorArchivos.fileChooser();
+        File file = fileChooser.showOpenDialog(this.dialogStage);
         vBoxIconos.setDisable(false);
         textFieldAncho.setDisable(true);
         textFieldLargo.setDisable(true);
         buttonAceptar.setDisable(true);
         menuItemExportar.setDisable(false);
         menuItemGuardar.setDisable(false);
-        jsonObject = administradorArchivos.leerArchivoJson(file);  
-         long filas = (long) jsonObject.get("filas");
-         long columnas = (long) jsonObject.get("columnas");
-         gridPaneMapa = logica.mostrarMapa((int) filas, (int) columnas);
-         administradorArchivos.muestraGridPane(gridPaneMapa, file);
-         anchorPaneMapa.getChildren().add(gridPaneMapa);
-        
+        jsonObject = administradorArchivos.leerArchivoJson(file);
+        long filas = (long) jsonObject.get("filas");
+        long columnas = (long) jsonObject.get("columnas");
+        gridPaneMapa = logica.mostrarMapa((int) filas, (int) columnas);
+        administradorArchivos.muestraGridPane(gridPaneMapa, file);
+        anchorPaneMapa.getChildren().add(gridPaneMapa);
     }
 
     @FXML

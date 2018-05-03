@@ -99,12 +99,14 @@ public class AdministradorArchivos {
             ArrayList posicionIcono = (ArrayList) jsonObject.get("posicionIcono");
             long filas = (long) jsonObject.get("filas");
             long columnas = (long) jsonObject.get("columnas");
+            
         } catch (FileNotFoundException exception) {
             exception.printStackTrace();
-        } catch (IOException | ParseException exception) {
+        } catch (IOException | ParseException exception) {;
+            exception.printStackTrace();
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
-
         return jsonObject;
     }
     
