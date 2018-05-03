@@ -60,6 +60,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML private Button buttonAceptar;
     @FXML private Button buttonBorrar;
     @FXML private Label labelMensaje;
+    @FXML private Label labelClickMensaje;
     private GridPane gridPaneMapa;
     ArrayList<Object> listaUrl = new ArrayList<>();
     
@@ -70,7 +71,6 @@ public class FXMLDocumentController implements Initializable {
      */
     @FXML
     public void buttonAceptarAccion(ActionEvent event) throws Exception {
-
         try {
         if (Integer.parseInt(textFieldLargo.getText()) <= 0 || Integer.parseInt(textFieldAncho.getText()) <= 0) {
             labelMensaje.setText("Valor incorrecto");
@@ -269,7 +269,7 @@ public class FXMLDocumentController implements Initializable {
         ImageView imageViewYoutube = new ImageView();
         imageViewYoutube.setImage(imagenYoutube);
         imageViewYoutube.setCursor(Cursor.HAND);
-      
+        
            imageViewFaceboook.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -279,13 +279,15 @@ public class FXMLDocumentController implements Initializable {
                         long columnas = (long) jsonObject.get("columnas");
                         logica.detectaClickMapa("iconos/facebook.png", (int) columnas, (int) filas);
                         listaUrl.add("iconos/facebook.png");
-
+                        labelClickMensaje.setText("Ha seleccionado Facebook.");
                     } else {
 
                         int largo = (int) Integer.parseInt(textFieldLargo.getText());
                         int ancho = (int) Integer.parseInt(textFieldAncho.getText());
                         logica.detectaClickMapa("iconos/facebook.png", largo, ancho);
                         listaUrl.add("iconos/facebook.png");
+                        labelClickMensaje.setText("Ha seleccionado Facebook.");
+                        
                     }
                 }
             }
@@ -300,12 +302,14 @@ public class FXMLDocumentController implements Initializable {
                         long columnas = (long) jsonObject.get("columnas");
                         logica.detectaClickMapa("iconos/instagram.png", (int) columnas, (int) filas);
                         listaUrl.add("iconos/instagram.png");
+                        labelClickMensaje.setText("Ha seleccionado Instagram.");
 
                     } else {
                         int largo = (int) Integer.parseInt(textFieldLargo.getText());
                         int ancho = (int) Integer.parseInt(textFieldAncho.getText());
                         logica.detectaClickMapa("iconos/instagram.png", largo, ancho);
                         listaUrl.add("iconos/instagram.png");
+                        labelClickMensaje.setText("Ha seleccionado Instagram.");
                     }
                 }
             }
@@ -320,12 +324,13 @@ public class FXMLDocumentController implements Initializable {
                         long columnas = (long) jsonObject.get("columnas");
                         logica.detectaClickMapa("iconos/skype.png", (int) columnas, (int) filas);
                         listaUrl.add("iconos/skype.png");
-
+                        labelClickMensaje.setText("Ha seleccionado Skype.");
                     } else {
                         int largo = (int) Integer.parseInt(textFieldLargo.getText());
                         int ancho = (int) Integer.parseInt(textFieldAncho.getText());
                         logica.detectaClickMapa("iconos/skype.png", largo, ancho);
                         listaUrl.add("iconos/skype.png");
+                        labelClickMensaje.setText("Ha seleccionado Skype.");
                     }
                 }
             }
@@ -340,12 +345,13 @@ public class FXMLDocumentController implements Initializable {
                         long columnas = (long) jsonObject.get("columnas");
                         logica.detectaClickMapa("iconos/snapchat.png", (int) columnas, (int) filas);
                         listaUrl.add("iconos/snapchat.png");
-
+                        labelClickMensaje.setText("Ha seleccionado Snapchat.");
                     } else {
                         int largo = (int) Integer.parseInt(textFieldLargo.getText());
                         int ancho = (int) Integer.parseInt(textFieldAncho.getText());
                         logica.detectaClickMapa("iconos/snapchat.png", largo, ancho);
                         listaUrl.add("iconos/snapchat.png");
+                        labelClickMensaje.setText("Ha seleccionado Snapchat.");
                     }
                 }
             }
@@ -360,12 +366,13 @@ public class FXMLDocumentController implements Initializable {
                         long columnas = (long) jsonObject.get("columnas");
                         logica.detectaClickMapa("iconos/soundcloud.png", (int) columnas, (int) filas);
                         listaUrl.add("iconos/soundcloud.png");
-
+                        labelClickMensaje.setText("Ha seleccionado Soundcloud.");
                     } else {
                         int largo = (int) Integer.parseInt(textFieldLargo.getText());
                         int ancho = (int) Integer.parseInt(textFieldAncho.getText());
                         logica.detectaClickMapa("iconos/soundcloud.png", largo, ancho);
                         listaUrl.add("iconos/soundcloud.png");
+                        labelClickMensaje.setText("Ha seleccionado Soundcloud.");
                     }
                 }
             }
@@ -380,12 +387,13 @@ public class FXMLDocumentController implements Initializable {
                         long columnas = (long) jsonObject.get("columnas");
                         logica.detectaClickMapa("iconos/telegram.png", (int) columnas, (int) filas);
                         listaUrl.add("iconos/telegram.png");
-
+                        labelClickMensaje.setText("Ha seleccionado Telegram.");    
                     } else {
                         int largo = (int) Integer.parseInt(textFieldLargo.getText());
                         int ancho = (int) Integer.parseInt(textFieldAncho.getText());
                         logica.detectaClickMapa("iconos/telegram.png", largo, ancho);
                         listaUrl.add("iconos/telegram.png");
+                        labelClickMensaje.setText("Ha seleccionado Telegram.");
                     }
                 }
             }
@@ -400,12 +408,13 @@ public class FXMLDocumentController implements Initializable {
                         long columnas = (long) jsonObject.get("columnas");
                         logica.detectaClickMapa("iconos/tumblr.png", (int) columnas, (int) filas);
                         listaUrl.add("iconos/tumblr.png");
-
+                        labelClickMensaje.setText("Ha seleccionado Tumblr.");
                     } else {
                         int largo = (int) Integer.parseInt(textFieldLargo.getText());
                         int ancho = (int) Integer.parseInt(textFieldAncho.getText());
                         logica.detectaClickMapa("iconos/tumblr.png", largo, ancho);
                         listaUrl.add("iconos/tumblr.png");
+                        labelClickMensaje.setText("Ha seleccionado Tumblr.");
                     }
                 }
             }
@@ -420,12 +429,13 @@ public class FXMLDocumentController implements Initializable {
                         long columnas = (long) jsonObject.get("columnas");
                         logica.detectaClickMapa("iconos/twitter.png", (int) columnas, (int) filas);
                         listaUrl.add("iconos/twitter.png");
-
+                        labelClickMensaje.setText("Ha seleccionado Twitter.");
                     } else {
                         int largo = (int) Integer.parseInt(textFieldLargo.getText());
                         int ancho = (int) Integer.parseInt(textFieldAncho.getText());
                         logica.detectaClickMapa("iconos/twitter.png", largo, ancho);
                         listaUrl.add("iconos/twitter.png");
+                        labelClickMensaje.setText("Ha seleccionado Twitter.");
                     }
                 }
             }
@@ -440,12 +450,13 @@ public class FXMLDocumentController implements Initializable {
                         long columnas = (long) jsonObject.get("columnas");
                         logica.detectaClickMapa("iconos/whatsapp.png", (int) columnas, (int) filas);
                         listaUrl.add("iconos/whatsapp.png");
-
+                        labelClickMensaje.setText("Ha seleccionado WhatsApp.");
                     } else {
                         int largo = (int) Integer.parseInt(textFieldLargo.getText());
                         int ancho = (int) Integer.parseInt(textFieldAncho.getText());
                         logica.detectaClickMapa("iconos/whatsapp.png", largo, ancho);
                         listaUrl.add("iconos/whatsapp.png");
+                        labelClickMensaje.setText("Ha seleccionado WhatsApp.");
                     }
                 }
             }
@@ -460,12 +471,13 @@ public class FXMLDocumentController implements Initializable {
                         long columnas = (long) jsonObject.get("columnas");
                         logica.detectaClickMapa("iconos/youtube.png", (int) columnas, (int) filas);
                         listaUrl.add("iconos/youtube.png");
-
+                        labelClickMensaje.setText("Ha seleccionado YouTube.");
                     } else {
                         int largo = (int) Integer.parseInt(textFieldLargo.getText());
                         int ancho = (int) Integer.parseInt(textFieldAncho.getText());
                         logica.detectaClickMapa("iconos/youtube.png", largo, ancho);
                         listaUrl.add("iconos/youtube.png");
+                        labelClickMensaje.setText("Ha seleccionado YouTube.");
                     }
                 }
             }
