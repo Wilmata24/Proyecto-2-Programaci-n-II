@@ -143,6 +143,7 @@ public class FXMLDocumentController implements Initializable {
     private void salir(ActionEvent event) {
         System.exit(0);
     }
+    
     JSONObject jsonObject;
     @FXML
     private void abrirDocumento(ActionEvent event) throws Exception {
@@ -158,45 +159,43 @@ public class FXMLDocumentController implements Initializable {
          long filas = (long) jsonObject.get("filas");
          long columnas = (long) jsonObject.get("columnas");
          gridPaneMapa = logica.mostrarMapa((int) filas, (int) columnas);
-         administradorArchivos.retornaGridPane(gridPaneMapa, file);
+         administradorArchivos.muestraGridPane(gridPaneMapa, file);
          anchorPaneMapa.getChildren().add(gridPaneMapa);
         
     }
 
     @FXML
-    
     private void exportar(ActionEvent event) throws Exception {
         int i = 0;
         int j = 0;
-      if(textFieldAncho.getText().equals("") && textFieldLargo.getText().equals("")){
-        long filas = (long) jsonObject.get("filas");
-        long columnas = (long) jsonObject.get("columnas");
-        gridPaneMapa = logica.mostrarMapa((int) filas, (int) columnas);
-        JSONArray url = (JSONArray) jsonObject.get("url");      
-        JSONArray posicionIcono = (JSONArray) jsonObject.get("posicionIcono");
-  
-        ImageView imageView[][] = new ImageView[(int) filas][(int)columnas];
-        Image image[][] = new Image[(int) filas][(int) columnas];
-       
-        do {
-            String iconosArchivo = url.get(i).toString();
-            String fila = posicionIcono.get(j).toString().substring(1, 2);
-            String columna = posicionIcono.get(j).toString().substring(5, 6);
-            image[Integer.parseInt(fila)][Integer.parseInt(columna)] = new Image(iconosArchivo);
-            imageView[Integer.parseInt(fila)][Integer.parseInt(columna)] = new ImageView();
-            imageView[Integer.parseInt(fila)][Integer.parseInt(columna)].setImage(image[Integer.parseInt(fila)][Integer.parseInt(columna)]);
+        if (textFieldAncho.getText().equals("") && textFieldLargo.getText().equals("")) {
+            long filas = (long) jsonObject.get("filas");
+            long columnas = (long) jsonObject.get("columnas");
+            gridPaneMapa = logica.mostrarMapa((int) filas, (int) columnas);
+            JSONArray url = (JSONArray) jsonObject.get("url");
+            JSONArray posicionIcono = (JSONArray) jsonObject.get("posicionIcono");
 
-            GridPane.setConstraints(imageView[Integer.parseInt(fila)][Integer.parseInt(columna)], Integer.parseInt(columna), Integer.parseInt(fila));
-            gridPaneMapa.getChildren().add(imageView[Integer.parseInt(fila)][Integer.parseInt(columna)]);
-            i++;
-            j++;
+            ImageView imageView[][] = new ImageView[(int) filas][(int) columnas];
+            Image image[][] = new Image[(int) filas][(int) columnas];
 
+            do {
+                String iconosArchivo = url.get(i).toString();
+                String fila = posicionIcono.get(j).toString().substring(1, 2);
+                String columna = posicionIcono.get(j).toString().substring(5, 6);
+                image[Integer.parseInt(fila)][Integer.parseInt(columna)] = new Image(iconosArchivo);
+                imageView[Integer.parseInt(fila)][Integer.parseInt(columna)] = new ImageView();
+                imageView[Integer.parseInt(fila)][Integer.parseInt(columna)].setImage(image[Integer.parseInt(fila)][Integer.parseInt(columna)]);
 
-        } while (i < posicionIcono.size());
-        logica.fileChooserExportar(gridPaneMapa);
-      } else {
-          logica.fileChooserExportar(gridPaneMapa);
-      }
+                GridPane.setConstraints(imageView[Integer.parseInt(fila)][Integer.parseInt(columna)], Integer.parseInt(columna), Integer.parseInt(fila));
+                gridPaneMapa.getChildren().add(imageView[Integer.parseInt(fila)][Integer.parseInt(columna)]);
+                i++;
+                j++;
+
+            } while (i < posicionIcono.size());
+            logica.fileChooserExportar(gridPaneMapa);
+        } else {
+            logica.fileChooserExportar(gridPaneMapa);
+        }
     }
   
     @FXML
@@ -270,206 +269,206 @@ public class FXMLDocumentController implements Initializable {
         imageViewYoutube.setImage(imagenYoutube);
         imageViewYoutube.setCursor(Cursor.HAND);
       
-            imageViewFaceboook.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {       
-                    if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                          if(textFieldAncho.getText().equals("") && textFieldLargo.getText().equals("")){
-                           long filas = (long) jsonObject.get("filas");
-                           long columnas = (long) jsonObject.get("columnas");
-                           logica.detectaClickMapa("iconos/facebook.png", (int) columnas,(int)filas);
-                          listaUrl.add("iconos/facebook.png");
-                           
-                     } else {
-                              
-                         int largo = (int) Integer.parseInt(textFieldLargo.getText());
-                         int ancho = (int) Integer.parseInt(textFieldAncho.getText());    
-                         logica.detectaClickMapa("iconos/facebook.png", largo, ancho);
-                         listaUrl.add("iconos/facebook.png");
+           imageViewFaceboook.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                    if (textFieldAncho.getText().equals("") && textFieldLargo.getText().equals("")) {
+                        long filas = (long) jsonObject.get("filas");
+                        long columnas = (long) jsonObject.get("columnas");
+                        logica.detectaClickMapa("iconos/facebook.png", (int) columnas, (int) filas);
+                        listaUrl.add("iconos/facebook.png");
+
+                    } else {
+
+                        int largo = (int) Integer.parseInt(textFieldLargo.getText());
+                        int ancho = (int) Integer.parseInt(textFieldAncho.getText());
+                        logica.detectaClickMapa("iconos/facebook.png", largo, ancho);
+                        listaUrl.add("iconos/facebook.png");
                     }
-                    } 
-                }             
-            });
+                }
+            }
+        });
             
-            imageViewInstagram.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                      if(textFieldAncho.getText().equals("") && textFieldLargo.getText().equals("")){
-                         long filas = (long) jsonObject.get("filas");
-                           long columnas = (long) jsonObject.get("columnas");
-                           logica.detectaClickMapa("iconos/instagram.png", (int) columnas,(int)filas);
-                           listaUrl.add("iconos/instagram.png");
+           imageViewInstagram.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                    if (textFieldAncho.getText().equals("") && textFieldLargo.getText().equals("")) {
+                        long filas = (long) jsonObject.get("filas");
+                        long columnas = (long) jsonObject.get("columnas");
+                        logica.detectaClickMapa("iconos/instagram.png", (int) columnas, (int) filas);
+                        listaUrl.add("iconos/instagram.png");
 
-                      } else {
-                      int largo = (int) Integer.parseInt(textFieldLargo.getText());
-                      int ancho = (int) Integer.parseInt(textFieldAncho.getText());
-                       logica.detectaClickMapa("iconos/instagram.png", largo, ancho);
-                       listaUrl.add("iconos/instagram.png");
-                      }                    
-                      }
-                }             
-            });
-            
-            imageViewSkype.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                  if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                      if(textFieldAncho.getText().equals("") && textFieldLargo.getText().equals("")){
-                         long filas = (long) jsonObject.get("filas");
-                           long columnas = (long) jsonObject.get("columnas");
-                           logica.detectaClickMapa("iconos/skype.png", (int) columnas,(int)filas);
-                           listaUrl.add("iconos/skype.png");
+                    } else {
+                        int largo = (int) Integer.parseInt(textFieldLargo.getText());
+                        int ancho = (int) Integer.parseInt(textFieldAncho.getText());
+                        logica.detectaClickMapa("iconos/instagram.png", largo, ancho);
+                        listaUrl.add("iconos/instagram.png");
+                    }
+                }
+            }
+        });
 
-                      } else {
-                      int largo = (int) Integer.parseInt(textFieldLargo.getText());
-                      int ancho = (int) Integer.parseInt(textFieldAncho.getText());
-                       logica.detectaClickMapa("iconos/skype.png", largo, ancho);
-                       listaUrl.add("iconos/skype.png");
-                      }                    
-                      }
-                }             
-            });
-            
-            imageViewSnapchat.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                      if(textFieldAncho.getText().equals("") && textFieldLargo.getText().equals("")){
-                         long filas = (long) jsonObject.get("filas");
-                           long columnas = (long) jsonObject.get("columnas");
-                           logica.detectaClickMapa("iconos/snapchat.png", (int) columnas,(int)filas);
-                            listaUrl.add("iconos/snapchat.png");
+        imageViewSkype.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                    if (textFieldAncho.getText().equals("") && textFieldLargo.getText().equals("")) {
+                        long filas = (long) jsonObject.get("filas");
+                        long columnas = (long) jsonObject.get("columnas");
+                        logica.detectaClickMapa("iconos/skype.png", (int) columnas, (int) filas);
+                        listaUrl.add("iconos/skype.png");
 
-                      } else {
-                      int largo = (int) Integer.parseInt(textFieldLargo.getText());
-                      int ancho = (int) Integer.parseInt(textFieldAncho.getText());
-                       logica.detectaClickMapa("iconos/snapchat.png", largo, ancho);
-                       listaUrl.add("iconos/snapchat.png");
-                      }                    
-                      }
-                }             
-            });
-            
-            imageViewSoundcloud.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                   if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                      if(textFieldAncho.getText().equals("") && textFieldLargo.getText().equals("")){
-                         long filas = (long) jsonObject.get("filas");
-                           long columnas = (long) jsonObject.get("columnas");
-                           logica.detectaClickMapa("iconos/soundcloud.png", (int) columnas,(int)filas);
-                           listaUrl.add("iconos/soundcloud.png");
+                    } else {
+                        int largo = (int) Integer.parseInt(textFieldLargo.getText());
+                        int ancho = (int) Integer.parseInt(textFieldAncho.getText());
+                        logica.detectaClickMapa("iconos/skype.png", largo, ancho);
+                        listaUrl.add("iconos/skype.png");
+                    }
+                }
+            }
+        });
 
-                      } else {
-                      int largo = (int) Integer.parseInt(textFieldLargo.getText());
-                      int ancho = (int) Integer.parseInt(textFieldAncho.getText());
-                       logica.detectaClickMapa("iconos/soundcloud.png", largo, ancho);
-                       listaUrl.add("iconos/soundcloud.png");
-                      }                    
-                      }
-                }             
-            });
-            
-            imageViewTelegram.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                      if(textFieldAncho.getText().equals("") && textFieldLargo.getText().equals("")){
-                         long filas = (long) jsonObject.get("filas");
-                           long columnas = (long) jsonObject.get("columnas");
-                           logica.detectaClickMapa("iconos/telegram.png", (int) columnas,(int)filas);
-                           listaUrl.add("iconos/telegram.png");
+        imageViewSnapchat.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                    if (textFieldAncho.getText().equals("") && textFieldLargo.getText().equals("")) {
+                        long filas = (long) jsonObject.get("filas");
+                        long columnas = (long) jsonObject.get("columnas");
+                        logica.detectaClickMapa("iconos/snapchat.png", (int) columnas, (int) filas);
+                        listaUrl.add("iconos/snapchat.png");
 
-                      } else {
-                      int largo = (int) Integer.parseInt(textFieldLargo.getText());
-                      int ancho = (int) Integer.parseInt(textFieldAncho.getText());
-                       logica.detectaClickMapa("iconos/telegram.png", largo, ancho);
-                       listaUrl.add("iconos/telegram.png");
-                      }                    
-                      }
-                }             
-            });
-            
-            imageViewTumblr.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                      if(textFieldAncho.getText().equals("") && textFieldLargo.getText().equals("")){
-                         long filas = (long) jsonObject.get("filas");
-                           long columnas = (long) jsonObject.get("columnas");
-                           logica.detectaClickMapa("iconos/tumblr.png", (int) columnas,(int)filas);
-                           listaUrl.add("iconos/tumblr.png");
+                    } else {
+                        int largo = (int) Integer.parseInt(textFieldLargo.getText());
+                        int ancho = (int) Integer.parseInt(textFieldAncho.getText());
+                        logica.detectaClickMapa("iconos/snapchat.png", largo, ancho);
+                        listaUrl.add("iconos/snapchat.png");
+                    }
+                }
+            }
+        });
 
-                      } else {
-                      int largo = (int) Integer.parseInt(textFieldLargo.getText());
-                      int ancho = (int) Integer.parseInt(textFieldAncho.getText());
-                       logica.detectaClickMapa("iconos/tumblr.png", largo, ancho);
-                       listaUrl.add("iconos/tumblr.png");
-                      }                    
-                      }
-                }             
-            });
-            
-            imageViewTwitter.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                      if(textFieldAncho.getText().equals("") && textFieldLargo.getText().equals("")){
-                         long filas = (long) jsonObject.get("filas");
-                           long columnas = (long) jsonObject.get("columnas");
-                           logica.detectaClickMapa("iconos/twitter.png", (int) columnas,(int)filas);
-                           listaUrl.add("iconos/twitter.png");
+        imageViewSoundcloud.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                    if (textFieldAncho.getText().equals("") && textFieldLargo.getText().equals("")) {
+                        long filas = (long) jsonObject.get("filas");
+                        long columnas = (long) jsonObject.get("columnas");
+                        logica.detectaClickMapa("iconos/soundcloud.png", (int) columnas, (int) filas);
+                        listaUrl.add("iconos/soundcloud.png");
 
-                      } else {
-                      int largo = (int) Integer.parseInt(textFieldLargo.getText());
-                      int ancho = (int) Integer.parseInt(textFieldAncho.getText());
-                       logica.detectaClickMapa("iconos/twitter.png", largo, ancho);
-                       listaUrl.add("iconos/twitter.png");
-                      }                    
-                      }
-                }             
-            });
-            
-            imageViewWhatsapp.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                      if(textFieldAncho.getText().equals("") && textFieldLargo.getText().equals("")){
-                         long filas = (long) jsonObject.get("filas");
-                           long columnas = (long) jsonObject.get("columnas");
-                           logica.detectaClickMapa("iconos/whatsapp.png", (int) columnas,(int)filas);
-                           listaUrl.add("iconos/whatsapp.png");
+                    } else {
+                        int largo = (int) Integer.parseInt(textFieldLargo.getText());
+                        int ancho = (int) Integer.parseInt(textFieldAncho.getText());
+                        logica.detectaClickMapa("iconos/soundcloud.png", largo, ancho);
+                        listaUrl.add("iconos/soundcloud.png");
+                    }
+                }
+            }
+        });
 
-                      } else {
-                      int largo = (int) Integer.parseInt(textFieldLargo.getText());
-                      int ancho = (int) Integer.parseInt(textFieldAncho.getText());
-                       logica.detectaClickMapa("iconos/whatsapp.png", largo, ancho);
-                       listaUrl.add("iconos/whatsapp.png");
-                      }                    
-                      }
-                }             
-            });
-            
-            imageViewYoutube.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                      if(textFieldAncho.getText().equals("") && textFieldLargo.getText().equals("")){
-                         long filas = (long) jsonObject.get("filas");
-                           long columnas = (long) jsonObject.get("columnas");
-                           logica.detectaClickMapa("iconos/youtube.png", (int) columnas,(int)filas);
-                           listaUrl.add("iconos/youtube.png");
+        imageViewTelegram.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                    if (textFieldAncho.getText().equals("") && textFieldLargo.getText().equals("")) {
+                        long filas = (long) jsonObject.get("filas");
+                        long columnas = (long) jsonObject.get("columnas");
+                        logica.detectaClickMapa("iconos/telegram.png", (int) columnas, (int) filas);
+                        listaUrl.add("iconos/telegram.png");
 
-                      } else {
-                      int largo = (int) Integer.parseInt(textFieldLargo.getText());
-                      int ancho = (int) Integer.parseInt(textFieldAncho.getText());
-                       logica.detectaClickMapa("iconos/youtube.png", largo, ancho);
-                       listaUrl.add("iconos/youtube.png");
-                      }                    
-                      }
-                }             
-            });
+                    } else {
+                        int largo = (int) Integer.parseInt(textFieldLargo.getText());
+                        int ancho = (int) Integer.parseInt(textFieldAncho.getText());
+                        logica.detectaClickMapa("iconos/telegram.png", largo, ancho);
+                        listaUrl.add("iconos/telegram.png");
+                    }
+                }
+            }
+        });
+
+        imageViewTumblr.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                    if (textFieldAncho.getText().equals("") && textFieldLargo.getText().equals("")) {
+                        long filas = (long) jsonObject.get("filas");
+                        long columnas = (long) jsonObject.get("columnas");
+                        logica.detectaClickMapa("iconos/tumblr.png", (int) columnas, (int) filas);
+                        listaUrl.add("iconos/tumblr.png");
+
+                    } else {
+                        int largo = (int) Integer.parseInt(textFieldLargo.getText());
+                        int ancho = (int) Integer.parseInt(textFieldAncho.getText());
+                        logica.detectaClickMapa("iconos/tumblr.png", largo, ancho);
+                        listaUrl.add("iconos/tumblr.png");
+                    }
+                }
+            }
+        });
+
+        imageViewTwitter.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                    if (textFieldAncho.getText().equals("") && textFieldLargo.getText().equals("")) {
+                        long filas = (long) jsonObject.get("filas");
+                        long columnas = (long) jsonObject.get("columnas");
+                        logica.detectaClickMapa("iconos/twitter.png", (int) columnas, (int) filas);
+                        listaUrl.add("iconos/twitter.png");
+
+                    } else {
+                        int largo = (int) Integer.parseInt(textFieldLargo.getText());
+                        int ancho = (int) Integer.parseInt(textFieldAncho.getText());
+                        logica.detectaClickMapa("iconos/twitter.png", largo, ancho);
+                        listaUrl.add("iconos/twitter.png");
+                    }
+                }
+            }
+        });
+
+        imageViewWhatsapp.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                    if (textFieldAncho.getText().equals("") && textFieldLargo.getText().equals("")) {
+                        long filas = (long) jsonObject.get("filas");
+                        long columnas = (long) jsonObject.get("columnas");
+                        logica.detectaClickMapa("iconos/whatsapp.png", (int) columnas, (int) filas);
+                        listaUrl.add("iconos/whatsapp.png");
+
+                    } else {
+                        int largo = (int) Integer.parseInt(textFieldLargo.getText());
+                        int ancho = (int) Integer.parseInt(textFieldAncho.getText());
+                        logica.detectaClickMapa("iconos/whatsapp.png", largo, ancho);
+                        listaUrl.add("iconos/whatsapp.png");
+                    }
+                }
+            }
+        });
+
+        imageViewYoutube.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                    if (textFieldAncho.getText().equals("") && textFieldLargo.getText().equals("")) {
+                        long filas = (long) jsonObject.get("filas");
+                        long columnas = (long) jsonObject.get("columnas");
+                        logica.detectaClickMapa("iconos/youtube.png", (int) columnas, (int) filas);
+                        listaUrl.add("iconos/youtube.png");
+
+                    } else {
+                        int largo = (int) Integer.parseInt(textFieldLargo.getText());
+                        int ancho = (int) Integer.parseInt(textFieldAncho.getText());
+                        logica.detectaClickMapa("iconos/youtube.png", largo, ancho);
+                        listaUrl.add("iconos/youtube.png");
+                    }
+                }
+            }
+        });
             
             vBoxIconos.getChildren().addAll(imageViewFaceboook, imageViewInstagram, imageViewSkype, imageViewSnapchat, imageViewSoundcloud, 
                                             imageViewTelegram, imageViewTumblr, imageViewTwitter, imageViewWhatsapp, imageViewYoutube);  

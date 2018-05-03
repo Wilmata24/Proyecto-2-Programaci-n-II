@@ -18,9 +18,9 @@
         <menus>
           <Menu mnemonicParsing="false" text="Archivo">
             <items>
+                  <MenuItem fx:id="menuItemExportar" mnemonicParsing="false" onAction="#exportar" text="Exportar" />
               <MenuItem fx:id="menuItemGuardar" mnemonicParsing="false" onAction="#guardar" text="Guardar" />
                   <MenuItem fx:id="menuItemAbrir" mnemonicParsing="false" onAction="#abrirDocumento" text="Abrir documento" />
-                  <MenuItem fx:id="menuItemExportar" mnemonicParsing="false" onAction="#exportar" text="Exportar" />
                   <MenuItem fx:id="menuItemSalir" mnemonicParsing="false" onAction="#salir" text="Salir" />
             </items>
           </Menu>
